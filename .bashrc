@@ -126,4 +126,4 @@ if [ -n "$FROM_BASH_PROFILE" ]; then
 fi
 
 # For now load '.profile'.
-[[ -r "${HOME}/.profile" ]] && . "${HOME}/.profile"
+[ -r "${HOME}/.profile" ] && . "${HOME}/.profile"
