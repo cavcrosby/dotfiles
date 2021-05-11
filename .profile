@@ -17,7 +17,8 @@ export ERROR="\033[1;31m[ERROR]:\033[0m"
 # like having a particular shell dotfile to write to hence the env var
 export SHELL_DOTFILE_TO_WRITE_TO=".profile"
 
-# add .local/bin directory to PATH
+# add bin directory variants to PATH
+export PATH="${PATH}:/sbin"
 export PATH="${PATH}:${HOME}/.local/bin"
 
 # The bashrc file should come from the dotfiles repo (ACTUAL_BASHRC_PATH)
