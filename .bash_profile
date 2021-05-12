@@ -1,4 +1,4 @@
-# shellcheck disable=1090,2148
+# shellcheck disable=1090,2148,1091
 # Load .profile
 [ -r "${HOME}/.profile" ] && source "${HOME}/.profile"
 

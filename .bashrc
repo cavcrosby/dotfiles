@@ -1,11 +1,10 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# NOTE: see /usr/share/doc/bash/examples/startup-files (in the
+# package bash-doc) for examples
 # shellcheck disable=1090
 
-# If not running interactively, don't do anything
-# TODO(conner@conneracrosby.tech): Look into what I meant by the bottom comment
-# Should be added to .bash_profile if wanted to chunk it from here
+# NOTES: if not running interactively, don't do anything. Should be added to
+# .bash_profile if wanted to chunk it from here.
 case $- in
     *i*) ;;
       *) return;;
@@ -126,4 +125,5 @@ if [ -n "$FROM_BASH_PROFILE" ]; then
 fi
 
 # For now load '.profile'.
+# shellcheck disable=1091
 [ -r "${HOME}/.profile" ] && . "${HOME}/.profile"

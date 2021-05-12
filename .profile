@@ -17,9 +17,15 @@ export ERROR="\033[1;31m[ERROR]:\033[0m"
 # like having a particular shell dotfile to write to hence the env var
 export SHELL_DOTFILE_TO_WRITE_TO=".profile"
 
-# add bin directory variants to PATH
-export PATH="${PATH}:/sbin"
-export PATH="${PATH}:${HOME}/.local/bin"
+# add bin directory variants to PATH if they are not in it
+SBIN_PATH="/sbin"
+LOCAL_BIN_PATH="${HOME}/.local/bin"
+if [ "$(echo "$PATH" | grep --extended-regexp ":?${SBIN_PATH}:?" --count)" -lt 1 ]; then
+    export PATH="${PATH}:${SBIN_PATH}"
+fi
+if [ "$(echo "$PATH" | grep --extended-regexp ":?${LOCAL_BIN_PATH}:?" --count)" -lt 1 ]; then
+    export PATH="${PATH}:${LOCAL_BIN_PATH}"
+fi
 
 # The bashrc file should come from the dotfiles repo (ACTUAL_BASHRC_PATH)
 # but any other script should just refer to bashrc's default location (as this might be 
@@ -29,17 +35,19 @@ export PATH="${PATH}:${HOME}/.local/bin"
 # export ACTUAL_BASHRC_PATH="${GIT_REPOS_PATH}/${DOTFILES_REPO_NAME}/.bashrc"
 
 # set if use custom prompt
-CUSTOM_PROMPT=yes
+CUSTOM_PROMPT="true"
 
 if [ -n "$CUSTOM_PROMPT" ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\n\[\033[00m\]\$ '
 fi
 
-# pyenv is used to manage different versions of python on the same system
-# uses the following to initilize the shell env for both pyenv and its extension virtualenv
+# NOTES: pyenv is used to manage different versions of python on the same 
+# system. 'pyenv' uses the following to initilize the shell env for both pyenv
+# and its extension virtualenv.
 export PYENV_ROOT="${HOME}/.pyenv"
-if [ -d "$PYENV_ROOT" ]; then
-    export PATH="/home/reap2sow1/.pyenv/bin:$PATH"
+PYENV_ROOT_BIN_PATH="/home/reap2sow1/.pyenv/bin"
+if [ -d "$PYENV_ROOT" ] && [ "$(echo "$PATH" | grep --extended-regexp ":?${PYENV_ROOT_BIN_PATH}:?" --count)" -lt 1 ]; then
+    export PATH="${PYENV_ROOT_BIN_PATH}:$PATH"
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 fi
