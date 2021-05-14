@@ -56,7 +56,7 @@ if [ -z "$GIT_REPOS_PATH" ]; then
     echo "${PROGRAM_NAME}: \$GIT_REPOS_PATH was not imported from .profile"
     exit 1
 elif ! [ -d "$GIT_REPOS_PATH" ]; then 
-    mkdir -p "$GIT_REPOS_PATH"
+    mkdir --parents "$GIT_REPOS_PATH"
 fi
 
 LOCAL_REPO_PATH="${GIT_REPOS_PATH}/${DOTFILES_REPO_NAME}"
@@ -85,9 +85,9 @@ fi
 # or else the particular dotfile will not be linked at install!
 for dotfile in "${DOTFILES_TO_INCLUDE_FOR_LINKING[@]}"; do
     if [ "$(dirname "$dotfile")" != "." ]; then
-        mkdir -p "$(dirname "$dotfile")"
+        mkdir --parents "$(dirname "$dotfile")"
     fi
-    ln -sf "$LOCAL_REPO_PATH/$dotfile" "./$dotfile"
+    ln --symbolic --force "$LOCAL_REPO_PATH/$dotfile" "./$dotfile"
 done
 
 echo -e "$SUCCESS installation was successfull! Restart your shell session to pull in new configurations"
