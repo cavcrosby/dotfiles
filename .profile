@@ -46,8 +46,20 @@ fi
 # and its extension virtualenv.
 export PYENV_ROOT="${HOME}/.pyenv"
 PYENV_ROOT_BIN_PATH="/home/reap2sow1/.pyenv/bin"
-if [ -d "$PYENV_ROOT" ] && [ "$(echo "$PATH" | grep --extended-regexp ":?${PYENV_ROOT_BIN_PATH}:?" --count)" -lt 1 ]; then
+if [ -d "$PYENV_ROOT" ] && [ -d "$PYENV_ROOT_BIN_PATH" ]; then
     export PATH="${PYENV_ROOT_BIN_PATH}:$PATH"
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
+    # NOTE: mainly to deal with PATH manipulation that could result in 
+    # duplication entries for pyenv (e.g. GNOME also loads profile)
+    # space delimited paths
+    SD_PATHS="$(echo "$PATH" | tr ':' ' ')"
+    # refactored path, default is first path from SD_PATHS
+    R_PATH="$(echo "$SD_PATHS" | awk '{print $1}')"
+    for sd_path in ${SD_PATHS}; do
+        if [ "$(echo "$R_PATH" | grep "$sd_path" --count)" -lt 1 ]; then
+            R_PATH="${R_PATH}:$sd_path"
+        fi
+    done
+    export PATH="$R_PATH"
 fi
