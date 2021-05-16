@@ -92,12 +92,22 @@ for dotfile in "${DOTFILES_TO_INCLUDE[@]}"; do
 done
 
 # NOTES: init scripts should be limited in scope to configure the new 
-# system. Package installs (e.g. deb, rpm) should be avoided.
+# system. Reinstall behavior varies from script to script (based on
+# desired output). Package installs (e.g. deb, rpm) should be avoided.
+# shellcheck disable=SC1091
 for f in "${INIT_SCRIPTS_PATH}"/*
 do
     case "$f" in
-        *)      "$f"
-                ;;
+        "${INIT_SCRIPTS_PATH}/install-globalbins")      . "${INIT_SCRIPTS_PATH}/.env"
+                                                        if [ -n "$SUDOER_PASSWORD" ]; then 
+                                                            echo "$SUDOER_PASSWORD" | sudo --stdin --preserve-env=GIT_REPOS_PATH,SUCCESS "$f"
+                                                        else
+                                                            echo -e "${PROGRAM_NAME}: SUDOER_PASSWORD not set, run $(basename "$f") manually, e.g."
+                                                            echo "echo \$SUDOER_PASSWORD | sudo --stdin --preserve-env=GIT_REPOS_PATH,SUCCESS \$f"
+                                                        fi
+                                                        ;;
+        *)                                              "$f"
+                                                        ;;
     esac
 done
 

@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# Installs different 'binaries' (or scripts) into respective locations.
+# Installs different 'binaries' (or scripts) a local location 
+# common in the PATH.
 
 set -e
 PROGRAM_NAME=$(basename "$0")
-GLOBAL_BIN_PATH="/usr/local/bin/"
 LOCAL_BIN_PATH="${HOME}/.local/bin"
 GENERAL_PURPOSE_SCRIPTS="general-purpose-scripts"
 LINK_SCRIPTS_FROMDIR="link-scripts-fromdir"
@@ -25,18 +25,22 @@ cd "$GIT_REPOS_PATH" || exit 1
 
 for git_repo_url in "${!GIT_REPO_URLS[@]}"; do
     case "$git_repo_url" in
-        "${GENERAL_PURPOSE_SCRIPTS}")   git clone --quiet "${GIT_REPO_URLS["$GENERAL_PURPOSE_SCRIPTS"]}" "$GENERAL_PURPOSE_SCRIPTS"
-                                        sudo install --mode=755 "./${GENERAL_PURPOSE_SCRIPTS}/pathjoin" "$GLOBAL_BIN_PATH"
+        "${GENERAL_PURPOSE_SCRIPTS}")   if ! [ -d "$GENERAL_PURPOSE_SCRIPTS" ]; then 
+                                            git clone --quiet "${GIT_REPO_URLS["$GENERAL_PURPOSE_SCRIPTS"]}" "$GENERAL_PURPOSE_SCRIPTS" 
+                                        fi
                                         # NOTE: link-scripts-fromdir creates symlinks (fromdir) to scripts in 
                                         # GENERAL_PURPOSE_SCRIPTS repo
                                         if [ -x "./${GENERAL_PURPOSE_SCRIPTS}/${LINK_SCRIPTS_FROMDIR}" ]; then
                                             cd "$GENERAL_PURPOSE_SCRIPTS" || exit 1
-                                            sed --in-place "s|LINK_DIR=|LINK_DIR=${HOME}/.local/bin|" "./${LINK_SCRIPTS_FROMDIR}"
+                                            # i'm ok with LINK_DIR value being nonquoted here
+                                            sed --in-place "s|LINK_DIR=|LINK_DIR=${LOCAL_BIN_PATH}|" "./${LINK_SCRIPTS_FROMDIR}"
                                             "./${LINK_SCRIPTS_FROMDIR}"
                                             cd ..
                                         fi
                                         ;;
     esac
 done
+
+echo -e "$SUCCESS local binaries were installed"
 
 exit 0

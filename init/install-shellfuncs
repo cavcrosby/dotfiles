@@ -18,7 +18,12 @@ fi
 if [ -z "$SHELLFUNCS_REPO_PATH" ]; then
     curl --output "$SHELLFUNCS_INSTALL_PROGRAM_NAME" --silent "$SHELLFUNCS_INSTALL_PROGRAM_URL"
     chmod 755 "$SHELLFUNCS_INSTALL_PROGRAM_NAME"
-    ./"${SHELLFUNCS_INSTALL_PROGRAM_NAME}"
+    if ! ./"${SHELLFUNCS_INSTALL_PROGRAM_NAME}" > /dev/null 2>&1; then
+        echo "$ERROR something went wrong with the shellfuncs install!"
+        exit 1
+    fi
 fi
+
+echo -e "$SUCCESS 'shellfuncs' was installed"
 
 exit 0
