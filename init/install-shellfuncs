@@ -8,6 +8,11 @@ SHELLFUNCS_INSTALL_PROGRAM_URL="https://raw.githubusercontent.com/reap2sow1/shel
 SHELLFUNCS_INSTALL_PROGRAM_NAME="install"
 export SHELLFUNCS_AUTOMATED_INSTALL="y"
 
+if [ -z "$(which curl)" ]; then
+    echo "${PROGRAM_NAME}: curl cannot be found on the PATH!"
+    exit 1
+fi
+
 # NOTES: this env var is set during the shellfuncs install.
 # If its set, then we don't want todo a reinstall.
 if [ -z "$SHELLFUNCS_REPO_PATH" ]; then

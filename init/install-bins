@@ -1,0 +1,37 @@
+#!/bin/bash
+#
+# Installs different 'binaries' (or scripts) into respective locations.
+
+set -e
+PROGRAM_NAME=$(basename "$0")
+GLOBAL_BIN_PATH="/usr/local/bin/"
+LOCAL_BIN_PATH="${HOME}/.local/bin"
+GENERAL_PURPOSE_SCRIPTS="general-purpose-scripts"
+declare -A GIT_REPO_URLS=(
+    ["$GENERAL_PURPOSE_SCRIPTS"]=https://github.com/reap2sow1/general-purpose-scripts
+)
+
+if [ -z "$(which git)" ]; then
+    echo "${PROGRAM_NAME}: git cannot be found on the PATH!"
+    exit 1
+fi
+
+cd "$GIT_REPOS_PATH" || exit 1
+
+for git_repo_url in "${!GIT_REPO_URLS[@]}"; do
+    case "$git_repo_url" in
+        "${GENERAL_PURPOSE_SCRIPTS}")   git clone --quiet "${GIT_REPO_URLS["$GENERAL_PURPOSE_SCRIPTS"]}" "$GENERAL_PURPOSE_SCRIPTS"
+                                        install --mode=755 "./${GENERAL_PURPOSE_SCRIPTS}/pathjoin" "$GLOBAL_BIN_PATH"
+                                        # NOTE: link-scripts-fromdir creates symlinks (fromdir) to scripts in 
+                                        # GENERAL_PURPOSE_SCRIPTS repo
+                                        if [ -x "./${GENERAL_PURPOSE_SCRIPTS}/link-scripts-fromdir" ]; then
+                                            cd "$GENERAL_PURPOSE_SCRIPTS" || exit 1
+                                            sed --in-place "s|LINK_DIR=|LINK_DIR=${HOME}/.local/bin|" "./${GENERAL_PURPOSE_SCRIPTS}/link-scripts-fromdir"
+                                            "./${GENERAL_PURPOSE_SCRIPTS}/link-scripts-fromdir"
+                                            cd ..
+                                        fi
+                                        ;;
+    esac
+done
+
+exit 0

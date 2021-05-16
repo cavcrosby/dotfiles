@@ -6,7 +6,6 @@
 set -e
 PROGRAM_NAME="install"
 PROFILE_FILE_NAME=".profile" # assuming .profile is ALWAYS '.profile'
-INIT_SCRIPTS_PATH="${PWD}/init"
 TEMP_DIR_NAME="${PROGRAM_NAME}-temp"
 PROFILE_REMOTE_URL='https://raw.githubusercontent.com/reap2sow1/dotfiles/main/.profile'
 DOTFILES_TO_INCLUDE=(
@@ -60,6 +59,7 @@ elif ! [ -d "$GIT_REPOS_PATH" ]; then
 fi
 
 LOCAL_REPO_PATH="${GIT_REPOS_PATH}/${DOTFILES_REPO_NAME}"
+INIT_SCRIPTS_PATH="${LOCAL_REPO_PATH}/init"
 
 # shellcheck disable=2034
 read -r -p "Is this a reinstall, y/n? (n) " RE_INSTALL_REPLY <&1
@@ -85,7 +85,6 @@ fi
 # or else the particular dotfile will not be linked at install! Also,
 # dirname may return a literal '.' char.
 for dotfile in "${DOTFILES_TO_INCLUDE[@]}"; do
-    $
     if [ "$(dirname "$dotfile")" != "." ]; then
         mkdir --parents "$(dirname "$dotfile")"
     fi
@@ -97,7 +96,7 @@ done
 for f in "${INIT_SCRIPTS_PATH}"/*
 do
     case "$f" in
-        *)      ./"$f"
+        *)      "$f"
                 ;;
     esac
 done
