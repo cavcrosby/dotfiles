@@ -1,13 +1,13 @@
 #!/bin/bash
 #
 # Small setup script for dotfiles repo.
-# Usage: curl --silent https://raw.githubusercontent.com/reap2sow1/dotfiles/main/install | bash
+# Usage: curl --silent https://raw.githubusercontent.com/cavcrosby/dotfiles/main/install | bash
 
 set -e
 PROGRAM_NAME="install"
 PROFILE_FILE_NAME=".profile" # assuming .profile is ALWAYS '.profile'
 TEMP_DIR_NAME="${PROGRAM_NAME}-temp"
-PROFILE_REMOTE_URL='https://raw.githubusercontent.com/reap2sow1/dotfiles/main/.profile'
+PROFILE_REMOTE_URL='https://raw.githubusercontent.com/cavcrosby/dotfiles/main/.profile'
 DOTFILES_TO_INCLUDE=(
     .bashrc
     .profile

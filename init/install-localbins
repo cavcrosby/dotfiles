@@ -9,7 +9,7 @@ LOCAL_BIN_PATH="${HOME}/.local/bin"
 GENERAL_PURPOSE_SCRIPTS="general-purpose-scripts"
 LINK_SCRIPTS_FROMDIR="link-scripts-fromdir"
 declare -A GIT_REPO_URLS=(
-    ["$GENERAL_PURPOSE_SCRIPTS"]=https://github.com/reap2sow1/general-purpose-scripts
+    ["$GENERAL_PURPOSE_SCRIPTS"]=https://github.com/cavcrosby/general-purpose-scripts
 )
 
 if [ -z "$(which git)" ]; then

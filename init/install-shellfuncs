@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# Installs shellfuncs https://github.com/reap2sow1/shellfuncs.
+# Installs shellfuncs https://github.com/cavcrosby/shellfuncs.
 
 set -e
 PROGRAM_NAME=$(basename "$0")
-SHELLFUNCS_INSTALL_PROGRAM_URL="https://raw.githubusercontent.com/reap2sow1/shellfuncs/main/install"
+SHELLFUNCS_INSTALL_PROGRAM_URL="https://raw.githubusercontent.com/cavcrosby/shellfuncs/main/install"
 SHELLFUNCS_INSTALL_PROGRAM_NAME="install"
 export SHELLFUNCS_AUTOMATED_INSTALL="y"
 

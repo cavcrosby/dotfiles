@@ -6,7 +6,7 @@ export EDITOR="codium --wait"
 
 # dotfile repo information, is used in several places
 export DOTFILES_REPO_NAME="dotfiles"
-export DOTFILES_REMOTE_REPO_URL="https://github.com/reap2sow1/${DOTFILES_REPO_NAME}"
+export DOTFILES_REMOTE_REPO_URL="https://github.com/cavcrosby/${DOTFILES_REPO_NAME}"
 
 # ANSI escape code sequences for status messages with character coloring
 export SUCCESS="\033[1;32m[SUCCESS]:\033[0m"

@@ -8,7 +8,7 @@ PROGRAM_NAME=$(basename "$0")
 GLOBAL_BIN_PATH="/usr/local/bin/"
 GENERAL_PURPOSE_SCRIPTS="general-purpose-scripts"
 declare -A GIT_REPO_URLS=(
-    ["$GENERAL_PURPOSE_SCRIPTS"]=https://github.com/reap2sow1/general-purpose-scripts
+    ["$GENERAL_PURPOSE_SCRIPTS"]=https://github.com/cavcrosby/general-purpose-scripts
 )
 
 # NOTES: check to see if I am root. Will want to be root before checking
