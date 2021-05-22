@@ -1,6 +1,6 @@
 [user]
 	name = Conner Crosby
-	email = conner@conneracrosby.tech
+	email = conner@cavcrosby.tech
 [core]
 	editor = "codium --wait"
 	excludesFile = /home/reap2sow1/.gitignore
