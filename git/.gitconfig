@@ -11,3 +11,5 @@
 	discard = restore
 	lastci = log -1
 	lastp = log -p -1
+[include]
+    path = ~/.gitconfig_local
