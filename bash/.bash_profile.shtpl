@@ -4,9 +4,9 @@
 
 [ -r "${HOME}/.profile" ] && . "${HOME}/.profile"
 
-[ -r "${HOME}/.profile_local" ] && . "${HOME}/.profile_local"
+[ -r "${HOME}/${LOCAL_PROFILE}" ] && . "${HOME}/${LOCAL_PROFILE}"
 
-# This is just used to keep .profile/.profile_local from being loaded twice
+# This is just used to keep .profile/${LOCAL_PROFILE} from being loaded twice
 # by '.bashrc'.
 export PROFILES_LOADED=true
 

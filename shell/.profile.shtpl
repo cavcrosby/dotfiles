@@ -54,3 +54,8 @@ if [ -d "${PYENV_ROOT}" ] && [ -d "${PYENV_ROOT_BIN_PATH}" ]; then
     done
     export PATH="${refactored_path}"
 fi
+
+# shellcheck disable=1090,1091
+[ -r "${HOME}/${LOCAL_PROFILE}" ] && [ "${PROFILES_LOADED}" != true ] && . "${HOME}/${LOCAL_PROFILE}"
+
+export LOCAL_PROFILE="${HOME}/${LOCAL_PROFILE}"

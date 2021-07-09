@@ -64,6 +64,3 @@ fi
 
 # shellcheck disable=1091
 [ -r "${HOME}/.profile" ] && [ "${PROFILES_LOADED}" != true ] && . "${HOME}/.profile"
-
-# shellcheck disable=1091
-[ -r "${HOME}/.profile_local" ] && [ "${PROFILES_LOADED}" != true ] && . "${HOME}/.profile_local"
