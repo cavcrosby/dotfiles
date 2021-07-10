@@ -46,11 +46,9 @@ shell_template_wildcard := %${SHELL_TEMPLATE_EXT}
 DOTFILE_WILDCARD := .%
 dotfile_shell_templates := $(shell find ${CURDIR} -name .*${SHELL_TEMPLATE_EXT})
 
-# TODO(cavcrosby): using a shorter variable name w/comment < a tad longer variable name with no comment!
-# NOTES: e ==> executable, certain executables should exist before
-# running. Inspired from:
+# inspired from:
 # https://stackoverflow.com/questions/5618615/check-if-a-program-exists-from-a-makefile#answer-25668869
-_check_executables := $(foreach e,${executables},$(if $(shell command -v ${e}),pass,$(error "No ${e} in PATH")))
+_check_executables := $(foreach exec,${executables},$(if $(shell command -v ${exec}),pass,$(error "No ${exec} in PATH")))
 
 # Determines the dotfile name(s) to be generated from the template(s).
 # Short hand notation for string substitution: $(text:pattern=replacement).
@@ -60,7 +58,7 @@ dotfils := $(dotfile_shell_templates:${SHELL_TEMPLATE_EXT}=)
 ${HELP}:
 	# inspired by the makefiles of the Linux kernel and Mercurial
 >	@echo 'Available make targets:'
->	@echo '  ${DOTFILES}       - evaluate dotfiles that are shell templates (shtpls).'
+>	@echo '  ${DOTFILES}       - evaluate dotfiles that are shell templates (${SHELL_TEMPLATE_EXT}).'
 >	@echo '  ${LOCAL_DOTFILES} - creates local dotfiles not tracked by version control.'
 >	@echo '  ${INSTALL}        - links all the dotfiles to their appropriate places.'
 >	@echo '  ${UNINSTALL}      - removes links that were inserted by the install target.'
