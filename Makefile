@@ -76,11 +76,11 @@ ${LOCAL_DOTFILES}:
 ${INSTALL}: ${dotfils}
 >	@for pkg in ${home_pkgs}; do \
 >		echo ${STOW} --target="$${HOME}" "$${pkg}"; \
->		${STOW} --target="$${HOME}" "$${pkg}"; \
+>		${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}" "$${pkg}"; \
 >	done
 >
 >	@echo ${STOW} --target="$${HOME}/.ssh" "${ssh_pkg}"
->	@${STOW} --target="$${HOME}/.ssh" "${ssh_pkg}"
+>	@${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}/.ssh" "${ssh_pkg}"
 
 # TODO(cavcrosby): while the below works, it appears to generate 'BUG' warnings, this appears to be an issue with stow. Will probably want to monitor the following ticket:
 # https://github.com/aspiers/stow/issues/65
@@ -88,11 +88,11 @@ ${INSTALL}: ${dotfils}
 ${UNINSTALL}:
 >	@for pkg in ${home_pkgs}; do \
 >		echo ${STOW} --target="$${HOME}" --delete "$${pkg}"; \
->		${STOW} --target="$${HOME}" --delete "$${pkg}"; \
+>		${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}" --delete "$${pkg}"; \
 >	done
 >
 >	@echo ${STOW} --target="$${HOME}/.ssh" --delete "${ssh_pkg}"
->	@${STOW} --target="$${HOME}/.ssh" --delete "${ssh_pkg}"
+>	@${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}/.ssh" --delete "${ssh_pkg}"
 
 # custom implicit rules for the above targets
 ${DOTFILE_WILDCARD}: ${DOTFILE_WILDCARD}${SHELL_TEMPLATE_EXT}
