@@ -13,18 +13,18 @@ local_config_files_vars = \
 	$${LOCAL_PROFILE}
 
 # dotfile pkg dirs, stow will complain if I give absolute paths
-bash_pkg = bash
-git_pkg = git
-shell_pkg = shell
-msmtp_pkg = msmtp
-ssh_pkg = .ssh
+BASH_PKG = bash
+GIT_PKG = git
+SHELL_PKG = shell
+MSMTP_PKG = msmtp
+SSH_PKG = .ssh
 
 # pkg groupings, requires at least two pkgs to use a group
 home_pkgs = \
-	${bash_pkg}\
-	${git_pkg}\
-	${shell_pkg}\
-	${msmtp_pkg}\
+	${BASH_PKG}\
+	${GIT_PKG}\
+	${SHELL_PKG}\
+	${MSMTP_PKG}\
 
 # targets
 HELP = help
@@ -79,8 +79,8 @@ ${INSTALL}: ${dotfils}
 >		${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}" "$${pkg}"; \
 >	done
 >
->	@echo ${STOW} --target="$${HOME}/.ssh" "${ssh_pkg}"
->	@${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}/.ssh" "${ssh_pkg}"
+>	@echo ${STOW} --target="$${HOME}/.ssh" "${SSH_PKG}"
+>	@${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}/.ssh" "${SSH_PKG}"
 
 # TODO(cavcrosby): while the below works, it appears to generate 'BUG' warnings, this appears to be an issue with stow. Will probably want to monitor the following ticket:
 # https://github.com/aspiers/stow/issues/65
@@ -91,8 +91,8 @@ ${UNINSTALL}:
 >		${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}" --delete "$${pkg}"; \
 >	done
 >
->	@echo ${STOW} --target="$${HOME}/.ssh" --delete "${ssh_pkg}"
->	@${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}/.ssh" --delete "${ssh_pkg}"
+>	@echo ${STOW} --target="$${HOME}/.ssh" --delete "${SSH_PKG}"
+>	@${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}/.ssh" --delete "${SSH_PKG}"
 
 # custom implicit rules for the above targets
 ${DOTFILE_WILDCARD}: ${DOTFILE_WILDCARD}${SHELL_TEMPLATE_EXT}
