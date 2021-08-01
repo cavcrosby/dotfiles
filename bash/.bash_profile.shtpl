@@ -4,14 +4,4 @@
 
 [ -r "${HOME}/.profile" ] && . "${HOME}/.profile"
 
-[ -r "${HOME}/${LOCAL_PROFILE}" ] && . "${HOME}/${LOCAL_PROFILE}"
-
-# This is just used to keep .profile/${LOCAL_PROFILE} from being loaded twice
-# by '.bashrc'.
-export PROFILES_LOADED=true
-
 [ -r "${HOME}/.bashrc" ] && . "${HOME}/.bashrc"
-
-# Used for now, the issue is PROFILES_LOADED lingers in the env when .bashrc is
-# read each time from a new non-login bash session.
-unset PROFILES_LOADED

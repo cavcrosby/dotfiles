@@ -32,6 +32,18 @@ shopt -s checkwinsize
 # see lesspipe(1).
 [ -x "/usr/bin/lesspipe" ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "${TERM}" in
+    xterm-color|*-256color) color_prompt=true ;;
+esac
+
+if [ "${color_prompt}" = true ]; then
+    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\n\[\033[00m\]\$ '
+else
+    PS1='\u@\h:\w\$ '
+fi
+unset color_prompt
+
 # enable color support of ls and add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     # I want the last expression to run in the event if either of the first two
@@ -62,5 +74,7 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# shellcheck disable=1091
-[ -r "${HOME}/.profile" ] && [ "${PROFILES_LOADED}" != true ] && . "${HOME}/.profile"
+if [ -d "${PYENV_ROOT}" ]; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi

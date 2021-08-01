@@ -58,11 +58,11 @@ dotfils := $(dotfile_shell_templates:${SHELL_TEMPLATE_EXT}=)
 ${HELP}:
 	# inspired by the makefiles of the Linux kernel and Mercurial
 >	@echo 'Available make targets:'
->	@echo '  ${DOTFILES}       - evaluate dotfiles that are shell templates (${SHELL_TEMPLATE_EXT}).'
->	@echo '  ${LOCAL_DOTFILES} - creates local dotfiles not tracked by version control.'
->	@echo '  ${INSTALL}        - links all the dotfiles to their appropriate places.'
->	@echo '  ${UNINSTALL}      - removes links that were inserted by the install target.'
->	@echo '  ${CLEAN}          - removes files generated from the ${DOTFILES} target.'
+>	@echo '  ${DOTFILES}       - evaluate dotfiles that are shell templates (${SHELL_TEMPLATE_EXT})'
+>	@echo '  ${LOCAL_DOTFILES} - creates local dotfiles not tracked by version control'
+>	@echo '  ${INSTALL}        - links all the dotfiles to their appropriate places'
+>	@echo '  ${UNINSTALL}      - removes links that were inserted by the install target'
+>	@echo '  ${CLEAN}          - removes files generated from the ${DOTFILES} target'
 
 .PHONY: ${DOTFILES}
 ${DOTFILES}: ${dotfils}
