@@ -82,6 +82,9 @@ ${INSTALL}: ${dotfils}
 >	@echo ${STOW} --target="$${HOME}/.ssh" "${SSH_PKG}"
 >	@${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}/.ssh" "${SSH_PKG}"
 
+# TODO(cavcrosby): if a dotfile exists, IIRC stow will abort due to not being the
+# original creator. If a dotfile already exists in the target, just remove it.
+
 # MONITOR(cavcrosby): while the below works, it appears to generate 'BUG' warnings, this appears to be an issue with stow. Will probably want to monitor the following ticket:
 # https://github.com/aspiers/stow/issues/65
 .PHONY: ${UNINSTALL}
