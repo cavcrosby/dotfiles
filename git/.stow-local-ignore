@@ -22,5 +22,6 @@ _darcs
 ^/LICENSE.*
 ^/COPYING
 
-# pkg specific
+# pkg specific, for reference to as why this was commented out:
+# https://github.com/aspiers/stow/issues/75
 # \.gitignore
