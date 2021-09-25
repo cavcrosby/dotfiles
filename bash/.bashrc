@@ -78,3 +78,6 @@ if [ -d "${PYENV_ROOT}" ]; then
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 fi
+
+export GOPATH="${HOME}/.local/go"
+export PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
