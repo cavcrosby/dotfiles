@@ -30,6 +30,9 @@ if [ -d "${PYENV_ROOT}" ]; then
     eval "$(pyenv init --path)"
 fi
 
+export GOPATH="${HOME}/.local/go"
+export PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
+
 # shellcheck disable=1090,1091
 [ -r "${HOME}/${LOCAL_PROFILE}" ] && . "${HOME}/${LOCAL_PROFILE}"
 
