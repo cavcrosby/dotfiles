@@ -55,13 +55,15 @@ dotfile_paths := $(dotfile_shell_templates:${SHELL_TEMPLATE_EXT}=)
 # that stow uses.
 all_dotfiles := $(shell echo \
 	$(shell find . -mindepth 2 \( ! -path './.git*' \) \
-	-and \( ! -name .*${SHELL_TEMPLATE_EXT} \) \
-	-and \( ! -name .stow-local-ignore \) \
-	-and \( -name '.*' \) \
-	-and \( -execdir sh -c "echo \"${dotfile_shell_templates}\" \
-		| grep --invert-match --quiet '{}'" ';' \) \
-	-and \( -printf '%f ' \)) \
-	$(foreach dotfile_path, ${dotfile_paths}, $(shell echo "$$(basename ${dotfile_path})")))
+		-and \( ! -name .*${SHELL_TEMPLATE_EXT} \) \
+		-and \( ! -name .stow-local-ignore \) \
+		-and \( -name '.*' \) \
+		-and \( -execdir sh -c "echo \"${dotfile_shell_templates}\" \
+			| grep --invert-match --quiet '{}'" ';' \) \
+		-and \( -printf '%f ' \) \
+	) \
+	$(foreach dotfile_path, ${dotfile_paths}, $(shell echo "$$(basename ${dotfile_path})")) \
+)
 
 # inspired from:
 # https://stackoverflow.com/questions/5618615/check-if-a-program-exists-from-a-makefile#answer-25668869

@@ -78,3 +78,9 @@ if [ -d "${PYENV_ROOT}" ]; then
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 fi
+
+# Used by various Debian maintenance tools, for reference:
+# https://www.debian.org/doc/manuals/maint-guide/first.en.html#dh-make
+DEBEMAIL="conner@cavcrosby.tech"
+DEBFULLNAME="Conner Crosby"
+export DEBEMAIL DEBFULLNAME
