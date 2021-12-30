@@ -3,7 +3,7 @@
 	email = conner@cavcrosby.tech
 [core]
 	editor = "codium --wait"
-	excludesFile = /home/reap2sow1/.gitignore
+	excludesFile = /home/conner/.gitignore
 [credential]
 	helper = store
 [alias]
