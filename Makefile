@@ -17,14 +17,14 @@ BASH_PKG = bash
 GIT_PKG = git
 SHELL_PKG = shell
 MSMTP_PKG = msmtp
-SSH_PKG = .ssh
+SSH_PKG = ssh
 
-# pkg groupings, requires at least two pkgs to use a group
-home_pkgs = \
+stow_pkgs = \
 	${BASH_PKG}\
 	${GIT_PKG}\
 	${SHELL_PKG}\
 	${MSMTP_PKG}\
+	${SSH_PKG}\
 
 # targets
 HELP = help
@@ -50,19 +50,20 @@ dotfile_shell_templates := $(shell find . -name .*${SHELL_TEMPLATE_EXT})
 # Short hand notation for string substitution: $(text:pattern=replacement).
 dotfile_paths := $(dotfile_shell_templates:${SHELL_TEMPLATE_EXT}=)
 
-# Find expression looks for dotfiles that are not based on templates, are in
-# stow packages, are not in the .git subdir, and are not any special dotfile
-# that stow uses.
-all_dotfiles := $(shell echo \
-	$(shell find . -mindepth 2 \( ! -path './.git*' \) \
-		-and \( ! -name .*${SHELL_TEMPLATE_EXT} \) \
+# Find expression that looks for files of interest to stow based on the following
+# criteria: the file is in a stow package, the file is of type file, the file is
+# not in the .git subdir, the file is not any special dotfile that stow uses, and
+# the file is not a shell template.
+#
+# The paths return should be of the form, <app>/<app files/dirs>, with the ending
+# child/leaf being a file (e.g. ssh/.ssh/config).
+stowfiles := $(shell echo \
+	$(shell find . -mindepth 2 \( -type f \) \
+		-and \( ! -path './.git*' \) \
 		-and \( ! -name .stow-local-ignore \) \
-		-and \( -name '.*' \) \
-		-and \( -execdir sh -c "echo \"${dotfile_shell_templates}\" \
-			| grep --invert-match --quiet '{}'" ';' \) \
-		-and \( -printf '%f ' \) \
+		-and \( ! -name .*${SHELL_TEMPLATE_EXT} \) \
+		-and \( -printf '%P ' \) \
 	) \
-	$(foreach dotfile_path, ${dotfile_paths}, $(shell echo "$$(basename ${dotfile_path})")) \
 )
 
 # inspired from:
@@ -81,7 +82,16 @@ ${HELP}:
 
 .PHONY: ${RMPLAIN_FILES}
 ${RMPLAIN_FILES}:
->	@rm --force $(foreach dotfile,$(addprefix $${HOME}/, ${all_dotfiles}),$(shell if ! [ -L "${dotfile}" ]; then echo "${dotfile}"; fi))
+	# This isn't very pretty to look at, considering a temporary shell variable must
+	# be set to use any shell parameter expansion (e.g. ${parameter:-word},
+	# ${parameter#word}).
+	#
+	# The alternative was to attempt to use a shell for loop, however, my IDE picks
+	# the ${p#w} parameter expansion to be a comment starting with the hashtag. Hence,
+	# that solution would also have some ugly backslashing going on, so this is ok
+	# for now.
+>	@rm --force $(foreach stowfile,${stowfiles},$\
+						$(shell stwfile=${stowfile}; tstwfile=$${stwfile#*/}; if ! [ -L "${HOME}/$${tstwfile}" ]; then echo "${HOME}/$${tstwfile}"; fi))
 
 .PHONY: ${DOTFILES}
 ${DOTFILES}: ${dotfile_paths}
@@ -93,25 +103,19 @@ ${LOCAL_DOTFILES}:
 
 .PHONY: ${INSTALL}
 ${INSTALL}: ${dotfile_paths} ${RMPLAIN_FILES}
->	@for pkg in ${home_pkgs}; do \
+>	@for pkg in ${stow_pkgs}; do \
 >		echo ${STOW} --target="$${HOME}" "$${pkg}"; \
 >		${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}" "$${pkg}"; \
 >	done
->
->	@echo ${STOW} --target="$${HOME}/.ssh" "${SSH_PKG}"
->	@${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}/.ssh" "${SSH_PKG}"
 
 # MONITOR(cavcrosby): while the below works, it appears to generate 'BUG' warnings, this appears to be an issue with stow. Will probably want to monitor the following ticket:
 # https://github.com/aspiers/stow/issues/65
 .PHONY: ${UNINSTALL}
 ${UNINSTALL}:
->	@for pkg in ${home_pkgs}; do \
+>	@for pkg in ${stow_pkgs}; do \
 >		echo ${STOW} --target="$${HOME}" --delete "$${pkg}"; \
 >		${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}" --delete "$${pkg}"; \
 >	done
->
->	@echo ${STOW} --target="$${HOME}/.ssh" --delete "${SSH_PKG}"
->	@${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}/.ssh" --delete "${SSH_PKG}"
 
 # custom implicit rules for the above targets
 ${DOTFILE_WILDCARD}: ${DOTFILE_WILDCARD}${SHELL_TEMPLATE_EXT}
