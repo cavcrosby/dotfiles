@@ -18,6 +18,7 @@ GIT_PKG = git
 SHELL_PKG = shell
 MSMTP_PKG = msmtp
 SSH_PKG = ssh
+TERMINATOR_PKG = terminator
 
 stow_pkgs = \
 	${BASH_PKG}\
@@ -25,6 +26,7 @@ stow_pkgs = \
 	${SHELL_PKG}\
 	${MSMTP_PKG}\
 	${SSH_PKG}\
+	${TERMINATOR_PKG}\
 
 # targets
 HELP = help
@@ -91,7 +93,7 @@ ${RMPLAIN_FILES}:
 	# that solution would also have some ugly backslashing going on, so this is ok
 	# for now.
 >	@rm --force $(foreach stowfile,${stowfiles},$\
-						$(shell stwfile=${stowfile}; tstwfile=$${stwfile#*/}; if ! [ -L "${HOME}/$${tstwfile}" ]; then echo "${HOME}/$${tstwfile}"; fi))
+					$(shell stwfile=${stowfile}; tstwfile=$${stwfile#*/}; if ! [ -L "${HOME}/$${tstwfile}" ]; then echo "${HOME}/$${tstwfile}"; fi))
 
 .PHONY: ${DOTFILES}
 ${DOTFILES}: ${dotfile_paths}
