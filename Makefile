@@ -19,6 +19,12 @@ SHELL_PKG = shell
 MSMTP_PKG = msmtp
 SSH_PKG = ssh
 TERMINATOR_PKG = terminator
+# MONITOR(cavcrosby): currently there is a "jenkins" file type supported by
+# vscode that uses the jenkins file icon. However, this file icon does not
+# extend to folders. This may change in the future, which then I could discard
+# the file icon that I have saved to use for "jenkins" directories. The icon
+# names are in the format required by vscode to be useable (folder_type_*).
+VSCODIUM_PKG = vscodium
 
 stow_pkgs = \
 	${BASH_PKG}\
@@ -27,6 +33,7 @@ stow_pkgs = \
 	${MSMTP_PKG}\
 	${SSH_PKG}\
 	${TERMINATOR_PKG}\
+	${VSCODIUM_PKG}\
 
 # targets
 HELP = help
@@ -107,7 +114,7 @@ ${LOCAL_DOTFILES}:
 ${INSTALL}: ${dotfile_paths} ${RMPLAIN_FILES}
 >	@for pkg in ${stow_pkgs}; do \
 >		echo ${STOW} --target="$${HOME}" "$${pkg}"; \
->		${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}" "$${pkg}"; \
+>		${STOW} --no-folding --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}" "$${pkg}"; \
 >	done
 
 # MONITOR(cavcrosby): while the below works, it appears to generate 'BUG' warnings, this appears to be an issue with stow. Will probably want to monitor the following ticket:
