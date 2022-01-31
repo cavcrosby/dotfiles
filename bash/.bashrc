@@ -84,3 +84,9 @@ fi
 DEBEMAIL="conner@cavcrosby.tech"
 DEBFULLNAME="Conner Crosby"
 export DEBEMAIL DEBFULLNAME
+
+# Sets an additional directory for make to search in for makefiles I include in
+# other project makefiles.
+make() {
+    command make --include-dir "${HOME}/.local/include/cavcrosby-makefiles" "$@"
+}
