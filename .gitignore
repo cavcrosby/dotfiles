@@ -1,11 +1,9 @@
 # repo specific
-
-# files generated formed from shtpls, will require opt in for dotfiles
 bash/*
-git/*
-msmtp/*
-shell/*
 !bash/.*.shtpl
+git/*
 !git/\.*.shtpl
+msmtp/*
 !msmtp/.*.shtpl
+shell/*
 !shell/\.*.shtpl
