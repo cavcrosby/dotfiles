@@ -24,9 +24,9 @@ fi
 # pyenv uses the following to initilize the shell env for both pyenv and its
 # extension virtualenv.
 export PYENV_ROOT="${HOME}/.pyenv"
-PYENV_ROOT_BIN_PATH="${PYENV_ROOT}/bin"
+PYENV_BIN_DIR_PATH="${PYENV_ROOT}/bin"
 if [ -d "${PYENV_ROOT}" ]; then
-    export PATH="${PYENV_ROOT_BIN_PATH}:${PATH}"
+    export PATH="${PYENV_BIN_DIR_PATH}:${PATH}"
     eval "$(pyenv init --path)"
 fi
 
