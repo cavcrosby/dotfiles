@@ -1,6 +1,8 @@
 [global_config]
   title_transmit_bg_color = "#4e9a06"
 [keybindings]
+  go_next = <Ctrl><Shift>n
+  go_prev = <Ctrl><Shift>p
 [profiles]
   [[default]]
     cursor_color = "#aaaaaa"
