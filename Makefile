@@ -1,6 +1,6 @@
 include base.mk
 
-# recursive variables
+# recursively expanded variables
 export LOCAL_GITCONFIG = .gitconfig_local
 export LOCAL_PROFILE = .profile_local
 local_config_files_vars = \
