@@ -106,8 +106,8 @@ ${LOCAL_DOTFILES}:
 .PHONY: ${INSTALL}
 ${INSTALL}: ${dotfile_paths} ${RMPLAIN_FILES}
 >	@for pkg in ${stow_pkgs}; do \
->		echo ${STOW} --target="$${HOME}" "$${pkg}"; \
->		${STOW} --no-folding --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}" "$${pkg}"; \
+>		echo ${STOW} --target="${DESTDIR}$${HOME}" "$${pkg}"; \
+>		${STOW} --no-folding --ignore=".*${SHELL_TEMPLATE_EXT}" --target="${DESTDIR}$${HOME}" "$${pkg}"; \
 >	done
 
 # MONITOR(cavcrosby): while the below works, it appears to generate 'BUG' warnings, this appears to be an issue with stow. Will probably want to monitor the following ticket:
@@ -115,8 +115,8 @@ ${INSTALL}: ${dotfile_paths} ${RMPLAIN_FILES}
 .PHONY: ${UNINSTALL}
 ${UNINSTALL}:
 >	@for pkg in ${stow_pkgs}; do \
->		echo ${STOW} --target="$${HOME}" --delete "$${pkg}"; \
->		${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="$${HOME}" --delete "$${pkg}"; \
+>		echo ${STOW} --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
+>		${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
 >	done
 
 # custom implicit rules for the above targets
