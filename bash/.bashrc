@@ -90,3 +90,12 @@ export DEBEMAIL DEBFULLNAME
 make() {
     command make --include-dir "${HOME}/.local/include/cavcrosby-makefiles" "$@"
 }
+
+# Dervies from https://github.com/nvm-sh/nvm#installing-and-updating, this loads
+# nvm and it's bash completion.
+export NVM_DIR="${HOME}/.nvm"
+
+# shellcheck disable=1091
+[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
+# shellcheck disable=1091
+[ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
