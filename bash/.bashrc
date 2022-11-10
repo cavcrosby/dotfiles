@@ -60,6 +60,9 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+if [ -z "$(command -v kubectl)" ] && [ -n "$(command -v minikube)" ]; then
+    alias kubectl="minikube kubectl --"
+fi
 
 # Enable programmable bash completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
