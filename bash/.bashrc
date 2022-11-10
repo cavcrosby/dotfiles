@@ -50,16 +50,16 @@ if [ -x /usr/bin/dircolors ]; then
     # expressions failed to run 'as intended'.
     # shellcheck disable=2015
     [ -r ~/.dircolors ] && eval "$(dircolors --bourne-shell ~/.dircolors)" || eval "$(dircolors --bourne-shell)"
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+    alias ls="ls --color=auto"
+    alias grep="grep --color=auto"
+    alias fgrep="fgrep --color=auto"
+    alias egrep="egrep --color=auto"
 fi
 
 # add other handy aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+alias ll="ls -alF"
+alias la="ls -A"
+alias l="ls -CF"
 if [ -z "$(command -v kubectl)" ] && [ -n "$(command -v minikube)" ]; then
     alias kubectl="minikube kubectl --"
 fi
