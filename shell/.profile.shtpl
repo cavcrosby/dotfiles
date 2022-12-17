@@ -21,7 +21,7 @@ if [ "$(echo "${PATH}" | grep --extended-regexp ":?${local_bin_path}:?" --count)
 fi
 
 # pyenv is used to manage different versions of python on the same system.
-# pyenv uses the following to initilize the shell env for both pyenv and its
+# pyenv uses the following to initialize the shell env for both pyenv and its
 # extension virtualenv.
 export PYENV_ROOT="${HOME}/.pyenv"
 PYENV_BIN_DIR_PATH="${PYENV_ROOT}/bin"
