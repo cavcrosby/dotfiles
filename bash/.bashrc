@@ -102,3 +102,11 @@ export NVM_DIR="${HOME}/.nvm"
 [ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
 # shellcheck disable=1091
 [ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
+
+if [ -d "${HOME}/.rbenv" ]; then
+    # rbenv is a version manager tool for the Ruby programming language on Unix-like
+    # systems. It is useful for switching between multiple Ruby versions on the same
+    # machine and for ensuring that each project you are working on always runs on
+    # the correct Ruby version.
+    eval "$("${HOME}"/.rbenv/bin/rbenv init - bash)"
+fi
