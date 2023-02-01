@@ -88,11 +88,11 @@ _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${ex
 ${HELP}:
 	# inspired by the makefiles of the Linux kernel and Mercurial
 >	@echo 'Common make targets:'
->	@echo '  ${DOTFILES}       - create dotfiles that are shell templates (${SHELL_TEMPLATE_EXT})'
->	@echo '  ${LOCAL_DOTFILES} - creates local dotfiles not tracked by version control'
->	@echo '  ${INSTALL}        - links all the dotfiles to their appropriate places'
->	@echo '  ${UNINSTALL}      - removes links that were inserted by the install target'
->	@echo '  ${CLEAN}          - removes files generated from the ${DOTFILES} target'
+>	@echo '  ${DOTFILES}       - create dotfiles that are shell templates (.shtpl)'
+>	@echo '  ${LOCAL_DOTFILES} - create local dotfiles not tracked by version control'
+>	@echo '  ${INSTALL}        - link all the dotfiles to their appropriate places'
+>	@echo '  ${UNINSTALL}      - remove links that were inserted by the install target'
+>	@echo '  ${CLEAN}          - remove files generated from the "dotfiles" target'
 
 .PHONY: ${RMPLAIN_FILES}
 ${RMPLAIN_FILES}:
