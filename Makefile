@@ -1,6 +1,14 @@
-include base.mk
+# special makefile variables
+.DEFAULT_GOAL := help
+.RECIPEPREFIX := >
 
 # recursively expanded variables
+SHELL = /usr/bin/sh
+TRUTHY_VALUES = \
+    true\
+    1
+
+# shell template variables
 export LOCAL_GITCONFIG = .gitconfig_local
 export LOCAL_PROFILE = .profile_local
 local_config_files_vars = \
@@ -33,9 +41,13 @@ stow_pkgs = \
 	${PAPIRUS_ICONS_PKG}
 
 # targets
+HELP = help
 DOTFILES = dotfiles
 LOCAL_DOTFILES = local-dotfiles
+INSTALL = install
+UNINSTALL = uninstall
 RMPLAIN_FILES = rmplain-files
+CLEAN = clean
 
 # executables
 ENVSUBST = envsubst
