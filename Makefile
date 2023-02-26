@@ -23,12 +23,6 @@ MSMTP_PKG = msmtp
 SSH_PKG = ssh
 TERMINATOR_PKG = terminator
 PAPIRUS_ICONS_PKG = papirus-icons
-# MONITOR(cavcrosby): currently there is a "jenkins" file type supported by
-# vscode that uses the jenkins file icon. However, this file icon does not
-# extend to folders. This may change in the future, which then I could discard
-# the file icon that I have saved to use for "jenkins" directories. The icon
-# names are in the format required by vscode to be useable (folder_type_*).
-VSCODIUM_PKG = vscodium
 
 stow_pkgs = \
 	${BASH_PKG}\
@@ -37,7 +31,6 @@ stow_pkgs = \
 	${MSMTP_PKG}\
 	${SSH_PKG}\
 	${TERMINATOR_PKG}\
-	${VSCODIUM_PKG}\
 	${PAPIRUS_ICONS_PKG}
 
 # targets
