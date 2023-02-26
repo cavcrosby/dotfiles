@@ -22,7 +22,6 @@ SHELL_PKG = shell
 MSMTP_PKG = msmtp
 SSH_PKG = ssh
 TERMINATOR_PKG = terminator
-PAPIRUS_ICONS_PKG = papirus-icons
 
 stow_pkgs = \
 	${BASH_PKG}\
@@ -30,8 +29,7 @@ stow_pkgs = \
 	${SHELL_PKG}\
 	${MSMTP_PKG}\
 	${SSH_PKG}\
-	${TERMINATOR_PKG}\
-	${PAPIRUS_ICONS_PKG}
+	${TERMINATOR_PKG}
 
 # targets
 HELP = help
