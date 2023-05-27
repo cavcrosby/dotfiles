@@ -82,31 +82,18 @@ if [ -d "${PYENV_ROOT}" ]; then
     eval "$(pyenv virtualenv-init -)"
 fi
 
-# Used by various Debian maintenance tools, for reference:
-# https://www.debian.org/doc/manuals/maint-guide/first.en.html#dh-make
-DEBEMAIL="cavcrosby@gmail.com"
-DEBFULLNAME="Conner Crosby"
-export DEBEMAIL DEBFULLNAME
-
-# Sets an additional directory for make to search in for makefiles I include in
-# other project makefiles.
-make() {
-    command make --include-dir "${HOME}/.local/include/cavcrosby-makefiles" "$@"
-}
-
-# Dervies from https://github.com/nvm-sh/nvm#installing-and-updating, this loads
-# nvm and it's bash completion.
-export NVM_DIR="${HOME}/.nvm"
-
-# shellcheck disable=1091
+# dynamic path means file existence is not guaranteed for sourcing (SC1091)
+# shellcheck source=/dev/null
 [ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
-# shellcheck disable=1091
+
+# dynamic path means file existence is not guaranteed for sourcing (SC1091)
+# shellcheck source=/dev/null
 [ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
 
 if [ -d "${HOME}/.rbenv" ]; then
-    # rbenv is a version manager tool for the Ruby programming language on Unix-like
-    # systems. It is useful for switching between multiple Ruby versions on the same
-    # machine and for ensuring that each project you are working on always runs on
-    # the correct Ruby version.
     eval "$("${HOME}"/.rbenv/bin/rbenv init - bash)"
 fi
+
+make() {
+    command make --include-dir "${HOME}/.local/include/cavcrosby-makefiles" "$@"
+}

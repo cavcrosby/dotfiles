@@ -1,0 +1,5 @@
+#
+#
+# .shellcheckrc: directives read by shellcheck(1).
+
+external-sources=true

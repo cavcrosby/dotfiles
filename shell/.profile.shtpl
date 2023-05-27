@@ -1,39 +1,37 @@
 #
-#
-# shellcheck disable=2148
+# shellcheck disable=SC2148 # not an executable
+# ~/.profile: executed by the command interpreter for login shells.
 
-# adds repository dirs as env vars
-export GIT_REPOS_PATH="${HOME}/git"
-export HG_REPOS_PATH="${HOME}/hg"
-export SVN_REPOS_PATH="${HOME}/svn"
+GIT_REPOS_PATH="${HOME}/git"
+HG_REPOS_PATH="${HOME}/hg"
+SVN_REPOS_PATH="${HOME}/svn"
+PYENV_ROOT="${HOME}/.pyenv"
+NVM_DIR="${HOME}/.nvm"
+DEBEMAIL="cavcrosby@gmail.com"
+DEBFULLNAME="Conner Crosby"
+EDITOR="codium --wait"
+GOPATH="${HOME}/.local/go"
 
-# preferred editor as env var
-export EDITOR="codium --wait"
-
-# add bin directory variants to PATH if they are not in it
-SBIN_PATH="/sbin"
-local_bin_path="${HOME}/.local/bin"
-if [ "$(echo "${PATH}" | grep --extended-regexp ":?${SBIN_PATH}:?" --count)" -lt 1 ]; then
-    export PATH="${PATH}:${SBIN_PATH}"
-fi
-if [ "$(echo "${PATH}" | grep --extended-regexp ":?${local_bin_path}:?" --count)" -lt 1 ]; then
-    export PATH="${PATH}:${local_bin_path}"
+if [ -d "/usr/local/go/bin" ]; then
+    PATH="/usr/local/go/bin:${PATH}"
 fi
 
-# pyenv is used to manage different versions of python on the same system.
-# pyenv uses the following to initialize the shell env for both pyenv and its
-# extension virtualenv.
-export PYENV_ROOT="${HOME}/.pyenv"
-PYENV_BIN_DIR_PATH="${PYENV_ROOT}/bin"
+if [ -d "${HOME}/.local/bin" ]; then
+    PATH="${HOME}/.local/bin:${PATH}"
+fi
+
+if [ -d "${GOPATH}/bin" ]; then
+    PATH="${GOPATH}/bin:${PATH}"
+fi
+
 if [ -d "${PYENV_ROOT}" ]; then
-    export PATH="${PYENV_BIN_DIR_PATH}:${PATH}"
-    eval "$(pyenv init --path)"
+    PATH="${PYENV_ROOT}/bin:${PATH}"
+    eval "$(pyenv init -)"
 fi
 
-export GOPATH="${HOME}/.local/go"
-export PATH="${PATH}:/usr/local/go/bin:${GOPATH}/bin"
-
-# shellcheck disable=1090,1091
+# LOCAL_PROFILE is a shell tpl var, something shellcheck cannot source (SC1091)
+# shellcheck source=/dev/null
 [ -r "${HOME}/${LOCAL_PROFILE}" ] && . "${HOME}/${LOCAL_PROFILE}"
 
-export LOCAL_PROFILE="${HOME}/${LOCAL_PROFILE}"
+export GIT_REPOS_PATH HG_REPOS_PATH SVN_REPOS_PATH PYENV_ROOT NVM_DIR DEBEMAIL \
+    DEBFULLNAME EDITOR GOPATH PATH
