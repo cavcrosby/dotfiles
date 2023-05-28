@@ -11,6 +11,15 @@ DEBEMAIL="cavcrosby@gmail.com"
 DEBFULLNAME="Conner Crosby"
 EDITOR="codium --wait"
 GOPATH="${HOME}/.local/go"
+common_path="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
+
+for path_node in $(echo "${PATH}" | tr ":" " "); do
+    if ! echo "${common_path}" | grep --quiet "${path_node}"; then
+        common_path="${path_node}:${common_path}"
+    fi
+done
+PATH="${common_path}"
+unset -v common_path
 
 if [ -d "/usr/local/go/bin" ]; then
     PATH="/usr/local/go/bin:${PATH}"
