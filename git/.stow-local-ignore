@@ -1,6 +1,4 @@
-# Derives from stow's builtin ignore list, should note this is local to this
-# pkg only. for reference:
-# https://www.gnu.org/software/stow/manual/html_node/Types-And-Syntax-Of-Ignore-Lists.html
+# Comments and blank lines are allowed.
 
 RCS
 .+,v
@@ -14,6 +12,7 @@ _darcs
 \.hg
 
 \.git
+# \.gitignore
 
 .+~          # emacs backup files
 \#.*\#       # emacs autosave files
@@ -21,7 +20,3 @@ _darcs
 ^/README.*
 ^/LICENSE.*
 ^/COPYING
-
-# pkg specific, for reference to as why this was commented out:
-# https://github.com/aspiers/stow/issues/75
-# \.gitignore
