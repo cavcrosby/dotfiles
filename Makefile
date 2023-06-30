@@ -4,9 +4,6 @@
 
 # recursively expanded variables
 SHELL = /usr/bin/sh
-TRUTHY_VALUES = \
-    true\
-    1
 
 # shell template variables
 export LOCAL_GITCONFIG = .gitconfig_local
@@ -48,7 +45,6 @@ executables = \
 
 # simply expanded variables
 SHELL_TEMPLATE_EXT := .shtpl
-shell_template_wildcard := %${SHELL_TEMPLATE_EXT}
 DOTFILE_WILDCARD := .%
 dotfile_shell_templates := $(shell find . -name .*${SHELL_TEMPLATE_EXT})
 # Determines the dotfile name(s) to be generated from the template(s).
