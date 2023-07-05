@@ -97,6 +97,9 @@ ${RMPLAIN_FILES}:
 .PHONY: ${DOTFILES}
 ${DOTFILES}: ${dotfile_paths}
 
+${DOTFILE_WILDCARD}: ${DOTFILE_WILDCARD}${SHELL_TEMPLATE_EXT}
+>	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"
+
 .PHONY: ${LOCAL_DOTFILES}
 ${LOCAL_DOTFILES}:
 >	touch "$${HOME}/${LOCAL_PROFILE}"
@@ -117,10 +120,6 @@ ${UNINSTALL}:
 >		echo ${STOW} --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
 >		${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
 >	done
-
-# custom implicit rules for the above targets
-${DOTFILE_WILDCARD}: ${DOTFILE_WILDCARD}${SHELL_TEMPLATE_EXT}
->	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"
 
 .PHONY: ${CLEAN}
 ${CLEAN}:
