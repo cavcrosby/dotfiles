@@ -83,16 +83,9 @@ ${HELP}:
 
 .PHONY: ${RMPLAIN_FILES}
 ${RMPLAIN_FILES}:
-	# This isn't very pretty to look at, considering a temporary shell variable must
-	# be set to use any shell parameter expansion (e.g. ${parameter:-word},
-	# ${parameter#word}).
-	#
-	# The alternative was to attempt to use a shell for loop, however, my IDE picks
-	# the ${p#w} parameter expansion to be a comment starting with the hashtag. Hence,
-	# that solution would also have some ugly backslashing going on, so this is ok
-	# for now.
->	@rm --force $(foreach stowfile,${stowfiles},$\
-					$(shell stwfile=${stowfile}; tstwfile=$${stwfile#*/}; if ! [ -L "${HOME}/$${tstwfile}" ]; then echo "${HOME}/$${tstwfile}"; fi))
+>	@for stowfile in $$(echo "${stowfiles}" | sed --regexp-extended 's_^\w+/| \w+/_ _g'); do \
+>		[ -L "$${HOME}/$${stowfile}" ] || rm --force "$${HOME}/$${stowfile}"; \
+>	done
 
 .PHONY: ${DOTFILES}
 ${DOTFILES}: ${dotfile_paths}
