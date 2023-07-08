@@ -82,6 +82,8 @@ ${HELP}:
 >	@echo '  ${CLEAN}          - remove files generated from the "dotfiles" target'
 
 .PHONY: ${RMPLAIN_FILES}
+${RMPLAIN_FILES}: private .SHELLFLAGS := -cx
+${RMPLAIN_FILES}: private export PS4 :=
 ${RMPLAIN_FILES}:
 >	@for stowfile in $$(echo "${stowfiles}" | sed --regexp-extended 's_^\w+/| \w+/_ _g'); do \
 >		[ -L "$${HOME}/$${stowfile}" ] || rm --force "$${HOME}/$${stowfile}"; \
@@ -99,7 +101,7 @@ ${LOCAL_DOTFILES}:
 >	touch "$${HOME}/${LOCAL_GITCONFIG}"
 
 .PHONY: ${INSTALL}
-${INSTALL}: ${dotfile_paths} ${RMPLAIN_FILES}
+${INSTALL}: ${dotfile_paths}
 >	@for pkg in ${stow_pkgs}; do \
 >		echo ${STOW} --target="${DESTDIR}$${HOME}" "$${pkg}"; \
 >		${STOW} --no-folding --ignore=".*${SHELL_TEMPLATE_EXT}" --target="${DESTDIR}$${HOME}" "$${pkg}"; \
