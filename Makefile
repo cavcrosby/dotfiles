@@ -103,7 +103,7 @@ ${LOCAL_DOTFILES}:
 .PHONY: ${INSTALL}
 ${INSTALL}: ${dotfile_paths}
 >	@for pkg in ${stow_pkgs}; do \
->		echo ${STOW} --target="${DESTDIR}$${HOME}" "$${pkg}"; \
+>		echo ${STOW} --no-folding --ignore=".*${SHELL_TEMPLATE_EXT}" --target="${DESTDIR}$${HOME}" "$${pkg}"; \
 >		${STOW} --no-folding --ignore=".*${SHELL_TEMPLATE_EXT}" --target="${DESTDIR}$${HOME}" "$${pkg}"; \
 >	done
 
@@ -112,7 +112,7 @@ ${INSTALL}: ${dotfile_paths}
 .PHONY: ${UNINSTALL}
 ${UNINSTALL}:
 >	@for pkg in ${stow_pkgs}; do \
->		echo ${STOW} --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
+>		echo ${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
 >		${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
 >	done
 
