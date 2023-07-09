@@ -44,12 +44,11 @@ executables = \
 	${STOW}
 
 # simply expanded variables
-SHELL_TEMPLATE_EXT := .shtpl
 DOTFILE_WILDCARD := .%
-dotfile_shell_templates := $(shell find . -name .*${SHELL_TEMPLATE_EXT})
+dotfile_shell_templates := $(shell find . -name .*.shtpl)
 # Determines the dotfile name(s) to be generated from the template(s).
 # Short hand notation for string substitution: $(text:pattern=replacement).
-dotfile_paths := $(dotfile_shell_templates:${SHELL_TEMPLATE_EXT}=)
+dotfile_paths := $(dotfile_shell_templates:.shtpl=)
 
 # Find expression that looks for files of interest to stow based on the following
 # criteria: the file is in a stow package, the file is of type file, the file is
@@ -62,7 +61,7 @@ stowfiles := $(shell echo \
 	$(shell find . -mindepth 2 \( -type f \) \
 		-and \( ! -path './.git*' \) \
 		-and \( ! -name .stow-local-ignore \) \
-		-and \( ! -name .*${SHELL_TEMPLATE_EXT} \) \
+		-and \( ! -name .*.shtpl \) \
 		-and \( -printf '%P ' \) \
 	) \
 )
@@ -92,7 +91,7 @@ ${RMPLAIN_FILES}:
 .PHONY: ${DOTFILES}
 ${DOTFILES}: ${dotfile_paths}
 
-${DOTFILE_WILDCARD}: ${DOTFILE_WILDCARD}${SHELL_TEMPLATE_EXT}
+${DOTFILE_WILDCARD}: ${DOTFILE_WILDCARD}.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"
 
 .PHONY: ${LOCAL_DOTFILES}
@@ -103,8 +102,8 @@ ${LOCAL_DOTFILES}:
 .PHONY: ${INSTALL}
 ${INSTALL}: ${dotfile_paths}
 >	@for pkg in ${stow_pkgs}; do \
->		echo ${STOW} --no-folding --ignore=".*${SHELL_TEMPLATE_EXT}" --target="${DESTDIR}$${HOME}" "$${pkg}"; \
->		${STOW} --no-folding --ignore=".*${SHELL_TEMPLATE_EXT}" --target="${DESTDIR}$${HOME}" "$${pkg}"; \
+>		echo ${STOW} --no-folding --ignore=".*.shtpl" --target="${DESTDIR}$${HOME}" "$${pkg}"; \
+>		${STOW} --no-folding --ignore=".*.shtpl" --target="${DESTDIR}$${HOME}" "$${pkg}"; \
 >	done
 
 # MONITOR(cavcrosby): while the below works, it appears to generate 'BUG' warnings, this appears to be an issue with stow. Will probably want to monitor the following ticket:
@@ -112,8 +111,8 @@ ${INSTALL}: ${dotfile_paths}
 .PHONY: ${UNINSTALL}
 ${UNINSTALL}:
 >	@for pkg in ${stow_pkgs}; do \
->		echo ${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
->		${STOW} --ignore=".*${SHELL_TEMPLATE_EXT}" --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
+>		echo ${STOW} --ignore=".*.shtpl" --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
+>		${STOW} --ignore=".*.shtpl" --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
 >	done
 
 .PHONY: ${CLEAN}
