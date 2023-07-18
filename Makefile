@@ -18,13 +18,15 @@ GIT_PKG = git
 SHELL_PKG = shell
 MSMTP_PKG = msmtp
 SSH_PKG = ssh
+TMUX_PKG = tmux
 
 stow_pkgs = \
 	${BASH_PKG}\
 	${GIT_PKG}\
 	${SHELL_PKG}\
 	${MSMTP_PKG}\
-	${SSH_PKG}
+	${SSH_PKG}\
+	${TMUX_PKG}
 
 # targets
 HELP = help
