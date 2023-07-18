@@ -18,15 +18,13 @@ GIT_PKG = git
 SHELL_PKG = shell
 MSMTP_PKG = msmtp
 SSH_PKG = ssh
-TERMINATOR_PKG = terminator
 
 stow_pkgs = \
 	${BASH_PKG}\
 	${GIT_PKG}\
 	${SHELL_PKG}\
 	${MSMTP_PKG}\
-	${SSH_PKG}\
-	${TERMINATOR_PKG}
+	${SSH_PKG}
 
 # targets
 HELP = help
