@@ -28,20 +28,18 @@ make() {
 # lesspipe(1).
 [ -x "/usr/bin/lesspipe" ] && eval "$(lesspipe)"
 
-no_ansi_color_support="$( (tput setaf && tput setab) 2>&1 > /dev/null || echo "true" 2>&1)"
-if ! [ "${no_ansi_color_support}" ]; then
+if (tput setaf && tput setab) > /dev/null 2>&1; then
     PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[1;34m\]\W\[\033[00m\]$ '
 else
     PS1='\u@\h:\w\$ '
 fi
 
-if ! [ "${no_ansi_color_support}" ] || (tput setf && tput setb) > /dev/null 2>&1; then
+if (tput setaf && tput setab) > /dev/null 2>&1 || (tput setf && tput setb) > /dev/null 2>&1; then
     alias ls="ls --color=auto"
     alias grep="grep --color=auto"
     alias fgrep="fgrep --color=auto"
     alias egrep="egrep --color=auto"
 fi
-unset -v no_ansi_color_support
 
 if [ -x "/usr/bin/dircolors" ]; then
     if [ -r "${HOME}/.dircolors" ]; then
