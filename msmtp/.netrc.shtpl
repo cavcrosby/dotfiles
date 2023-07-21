@@ -1,0 +1,3 @@
+machine smtp.gmail.com
+login cavcrosby@gmail.com
+password ${MSMTP_GMAIL_PASSWORD}

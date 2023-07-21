@@ -12,7 +12,8 @@ local_config_files_vars = \
 	$${LOCAL_GITCONFIG}\
 	$${LOCAL_PROFILE}\
 	$${_RCLONE_DRIVE_TOKEN}\
-	$${_RCLONE_DRIVE_ROOT_FOLDER_ID}
+	$${_RCLONE_DRIVE_ROOT_FOLDER_ID}\
+	$${MSMTP_GMAIL_PASSWORD}
 
 # dotfile pkg dirs, stow will complain if I give absolute paths
 BASH_PKG = bash
