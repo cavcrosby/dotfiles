@@ -1,0 +1,5 @@
+[crosbyco3]
+type = drive
+scope = drive.readonly
+token = ${_RCLONE_DRIVE_TOKEN}
+root_folder_id = ${_RCLONE_DRIVE_ROOT_FOLDER_ID}

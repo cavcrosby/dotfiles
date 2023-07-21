@@ -10,7 +10,9 @@ export LOCAL_GITCONFIG = .gitconfig_local
 export LOCAL_PROFILE = .profile_local
 local_config_files_vars = \
 	$${LOCAL_GITCONFIG}\
-	$${LOCAL_PROFILE}
+	$${LOCAL_PROFILE}\
+	$${_RCLONE_DRIVE_TOKEN}\
+	$${_RCLONE_DRIVE_ROOT_FOLDER_ID}
 
 # dotfile pkg dirs, stow will complain if I give absolute paths
 BASH_PKG = bash
@@ -19,6 +21,7 @@ SHELL_PKG = shell
 MSMTP_PKG = msmtp
 SSH_PKG = ssh
 TMUX_PKG = tmux
+RCLONE_PKG = rclone
 
 stow_pkgs = \
 	${BASH_PKG}\
@@ -26,7 +29,8 @@ stow_pkgs = \
 	${SHELL_PKG}\
 	${MSMTP_PKG}\
 	${SSH_PKG}\
-	${TMUX_PKG}
+	${TMUX_PKG}\
+	${RCLONE_PKG}
 
 # targets
 HELP = help

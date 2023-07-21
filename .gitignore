@@ -5,5 +5,7 @@ git/*
 !git/\.*.shtpl
 msmtp/*
 !msmtp/.*.shtpl
+rclone/*
+!rclone/.*.shtpl
 shell/*
 !shell/\.*.shtpl
