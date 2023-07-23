@@ -15,7 +15,7 @@ local_config_files_vars = \
 	$${_RCLONE_DRIVE_ROOT_FOLDER_ID}\
 	$${MSMTP_GMAIL_PASSWORD}
 
-# dotfile pkg dirs, stow will complain if I give absolute paths
+# stow pkgs
 BASH_PKG = bash
 GIT_PKG = git
 SHELL_PKG = shell
@@ -50,25 +50,13 @@ executables = \
 
 # simply expanded variables
 DOTFILE_WILDCARD := .%
-dotfile_shell_templates := $(shell find . -name .*.shtpl)
-# Determines the dotfile name(s) to be generated from the template(s).
-# Short hand notation for string substitution: $(text:pattern=replacement).
-dotfile_paths := $(dotfile_shell_templates:.shtpl=)
-
-# Find expression that looks for files of interest to stow based on the following
-# criteria: the file is in a stow package, the file is of type file, the file is
-# not in the .git subdir, the file is not any special dotfile that stow uses, and
-# the file is not a shell template.
-#
-# The paths return should be of the form, <app>/<app files/dirs>, with the ending
-# child/leaf being a file (e.g. ssh/.ssh/config).
-stowfiles := $(shell echo \
-	$(shell find . -mindepth 2 \( -type f \) \
-		-and \( ! -path './.git*' \) \
-		-and \( ! -name .stow-local-ignore \) \
-		-and \( ! -name .*.shtpl \) \
-		-and \( -printf '%P ' \) \
-	) \
+dotfile_shell_template_paths := $(shell find . -name .*.shtpl)
+dotfile_paths := $(patsubst %.shtpl,%,${dotfile_shell_template_paths})
+pkg_file_paths := $(shell find . -mindepth 2 \( -type f \) \
+	-and \( ! -path './.git*' \) \
+	-and \( ! -name .stow-local-ignore \) \
+	-and \( ! -name .*.shtpl \) \
+	-and \( -printf '%P ' \) \
 )
 
 # inspired from:
@@ -79,7 +67,7 @@ _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${ex
 ${HELP}:
 	# inspired by the makefiles of the Linux kernel and Mercurial
 >	@echo 'Common make targets:'
->	@echo '  ${DOTFILES}       - create dotfiles that are shell templates (.shtpl)'
+>	@echo '  ${DOTFILES}       - create dotfiles that come from a shell template (.shtpl)'
 >	@echo '  ${LOCAL_DOTFILES} - create local dotfiles not tracked by version control'
 >	@echo '  ${INSTALL}        - link all the dotfiles to their appropriate places'
 >	@echo '  ${UNINSTALL}      - remove links that were inserted by the install target'
@@ -89,8 +77,8 @@ ${HELP}:
 ${RMPLAIN_FILES}: private .SHELLFLAGS := -cx
 ${RMPLAIN_FILES}: private export PS4 :=
 ${RMPLAIN_FILES}:
->	@for stowfile in $$(echo "${stowfiles}" | sed --regexp-extended 's_^\w+/| \w+/_ _g'); do \
->		[ -L "$${HOME}/$${stowfile}" ] || rm --force "$${HOME}/$${stowfile}"; \
+>	@for pkg_file_path in $$(echo "${pkg_file_paths}" | sed --regexp-extended 's_^\w+/| \w+/_ _g'); do \
+>		[ -L "$${HOME}/$${pkg_file_path}" ] || rm --force "$${HOME}/$${pkg_file_path}"; \
 >	done
 
 .PHONY: ${DOTFILES}
