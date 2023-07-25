@@ -1,4 +1,5 @@
 # repo specific
+.conf
 bash/*
 !bash/.*.shtpl
 git/*

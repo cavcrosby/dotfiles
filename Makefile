@@ -6,6 +6,7 @@
 SHELL = /usr/bin/sh
 
 # shell template variables
+COMMON_CONFIGS_FILE = .conf
 export LOCAL_PROFILE = .profile_local
 local_config_files_vars = \
 	$${LOCAL_PROFILE}\
@@ -31,6 +32,20 @@ stow_pkgs = \
 	${SSH_PKG}\
 	${TMUX_PKG}\
 	${RCLONE_PKG}
+
+define _COMMON_CONFIGS_FILE =
+cat << _EOF_
+#
+#
+# Config file to centralize common dotfile vars.
+
+export _RCLONE_DRIVE_TOKEN=''
+export _RCLONE_DRIVE_ROOT_FOLDER_ID=""
+export MSMTP_GMAIL_PASSWORD=""
+export GIT_SIGNING_KEY_ID=""
+_EOF_
+endef
+export _COMMON_CONFIGS_FILE
 
 # targets
 HELP = help
@@ -66,11 +81,16 @@ _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${ex
 ${HELP}:
 	# inspired by the makefiles of the Linux kernel and Mercurial
 >	@echo 'Common make targets:'
+>	@echo '  ${COMMON_CONFIGS_FILE}          - the configuration file to be used by the'
+>	@echo '                   dotfiles that come from a shell template'
 >	@echo '  ${DOTFILES}       - create dotfiles that come from a shell template (.shtpl)'
 >	@echo '  ${LOCAL_DOTFILES} - create local dotfiles not tracked by version control'
 >	@echo '  ${INSTALL}        - link all the dotfiles to their appropriate places'
 >	@echo '  ${UNINSTALL}      - remove links that were inserted by the install target'
 >	@echo '  ${CLEAN}          - remove files generated from the "dotfiles" target'
+
+${COMMON_CONFIGS_FILE}:
+>	eval "$${_COMMON_CONFIGS_FILE}" > "./${COMMON_CONFIGS_FILE}"	
 
 .PHONY: ${RMPLAIN_FILES}
 ${RMPLAIN_FILES}: private .SHELLFLAGS := -cx
