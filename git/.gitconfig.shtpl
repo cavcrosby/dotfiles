@@ -1,6 +1,7 @@
 [user]
 	name = Conner Crosby
 	email = cavcrosby@gmail.com
+	signingKey = ${GIT_SIGNING_KEY_ID}
 [core]
 	editor = "codium --wait"
 	excludesFile = /home/conner/.gitignore
@@ -11,5 +12,3 @@
 	discard = restore
 	lastci = log -1
 	lastp = log -p -1
-[include]
-    path = ~/${LOCAL_GITCONFIG}

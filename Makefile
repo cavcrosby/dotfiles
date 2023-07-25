@@ -6,14 +6,13 @@
 SHELL = /usr/bin/sh
 
 # shell template variables
-export LOCAL_GITCONFIG = .gitconfig_local
 export LOCAL_PROFILE = .profile_local
 local_config_files_vars = \
-	$${LOCAL_GITCONFIG}\
 	$${LOCAL_PROFILE}\
 	$${_RCLONE_DRIVE_TOKEN}\
 	$${_RCLONE_DRIVE_ROOT_FOLDER_ID}\
-	$${MSMTP_GMAIL_PASSWORD}
+	$${MSMTP_GMAIL_PASSWORD}\
+	$${GIT_SIGNING_KEY_ID}
 
 # stow pkgs
 BASH_PKG = bash
@@ -90,7 +89,6 @@ ${DOTFILE_WILDCARD}: ${DOTFILE_WILDCARD}.shtpl
 .PHONY: ${LOCAL_DOTFILES}
 ${LOCAL_DOTFILES}:
 >	touch "$${HOME}/${LOCAL_PROFILE}"
->	touch "$${HOME}/${LOCAL_GITCONFIG}"
 
 .PHONY: ${INSTALL}
 ${INSTALL}: ${dotfile_paths}
