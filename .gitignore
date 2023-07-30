@@ -1,5 +1,7 @@
 # repo specific
 .conf
+aws/.aws/*
+!aws/.aws/*.shtpl
 bash/*
 !bash/.*.shtpl
 docker/.docker/*

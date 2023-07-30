@@ -12,6 +12,8 @@ local_config_files_vars = \
 	$${LOCAL_PROFILE}\
 	$${_RCLONE_DRIVE_TOKEN}\
 	$${_RCLONE_DRIVE_ROOT_FOLDER_ID}\
+	$${_AWS_ACCESS_KEY_ID}\
+	$${_AWS_SECRET_ACCESS_KEY}\
 	$${MSMTP_GMAIL_PASSWORD}\
 	$${GIT_SIGNING_KEY_ID}\
 	$${ENCODED_DOCKER_HUB_AUTH_STR}
@@ -25,6 +27,7 @@ SSH_PKG = ssh
 TMUX_PKG = tmux
 RCLONE_PKG = rclone
 DOCKER_PKG = docker
+AWS_PKG = aws
 
 stow_pkgs = \
 	${BASH_PKG}\
@@ -34,7 +37,8 @@ stow_pkgs = \
 	${SSH_PKG}\
 	${TMUX_PKG}\
 	${RCLONE_PKG}\
-	${DOCKER_PKG}
+	${DOCKER_PKG}\
+	${AWS_PKG}
 
 define _COMMON_CONFIGS_FILE =
 cat << '_EOF_'
@@ -44,6 +48,8 @@ cat << '_EOF_'
 
 export _RCLONE_DRIVE_TOKEN=''
 export _RCLONE_DRIVE_ROOT_FOLDER_ID=""
+export _AWS_ACCESS_KEY_ID=""
+export _AWS_SECRET_ACCESS_KEY=""
 export MSMTP_GMAIL_PASSWORD=""
 export GIT_SIGNING_KEY_ID=""
 export DOCKER_HUB_API_TOKEN=""
