@@ -19,6 +19,7 @@ alias l="ls -CF"
 if ! [ -x "$(command -v kubectl)" ] && [ -x "$(command -v minikube)" ]; then
     alias kubectl="minikube kubectl --"
 fi
+alias docker='env --chdir "${HOME}/.docker" docker'
 
 make() {
     command make --include-dir "${HOME}/.local/include/cavcrosby-makefiles" "$@"

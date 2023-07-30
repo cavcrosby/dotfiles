@@ -2,6 +2,8 @@
 .conf
 bash/*
 !bash/.*.shtpl
+docker/.docker/*
+!docker/.docker/*.*.shtpl
 git/*
 !git/\.*.shtpl
 msmtp/*
