@@ -12,7 +12,7 @@ HISTABSOLUTESIZE=2000
 HISTSIZE="${HISTABSOLUTESIZE}"
 HISTFILESIZE="${HISTABSOLUTESIZE}"
 HISTCONTROL="ignoredups:ignorespace"
-if (tput setaf && tput setab) > /dev/null 2>&1; then
+if (tput setaf && tput setab) > "/dev/null" 2>&1; then
     ANSI_COLOR_SUPPORT=1 # true
 else
     ANSI_COLOR_SUPPORT=0 # false
@@ -92,7 +92,7 @@ else
     PS1='\u@\h:\w\$ '
 fi
 
-if (( ANSI_COLOR_SUPPORT )) || (tput setf && tput setb) > /dev/null 2>&1; then
+if (( ANSI_COLOR_SUPPORT )) || (tput setf && tput setb) > "/dev/null" 2>&1; then
     alias ls="ls --color=auto"
     alias grep="grep --color=auto"
     alias fgrep="fgrep --color=auto"
