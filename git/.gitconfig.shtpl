@@ -5,6 +5,8 @@
 [core]
 	editor = codium --wait
 	excludesFile = /home/conner/.gitignore
+[commit]
+	gpgSign = true
 [credential]
 	helper = store
 [alias]
