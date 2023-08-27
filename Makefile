@@ -101,7 +101,7 @@ ${HELP}:
 >	@echo '  ${CLEAN}          - remove files generated from the "pkg-files" target'
 
 ${COMMON_CONFIGS_FILE}:
->	eval "$${_COMMON_CONFIGS_FILE}" > "./${COMMON_CONFIGS_FILE}"	
+>	eval "$${_COMMON_CONFIGS_FILE}" > "./${COMMON_CONFIGS_FILE}"
 
 .PHONY: ${RMPLAIN_FILES}
 ${RMPLAIN_FILES}: private .SHELLFLAGS := -cx
