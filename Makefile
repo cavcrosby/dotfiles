@@ -67,6 +67,7 @@ LOCAL_DOTFILES = local-dotfiles
 INSTALL = install
 UNINSTALL = uninstall
 RMPLAIN_FILES = rmplain-files
+CHMOD_FILES = chmod-files
 CLEAN = clean
 
 # executables
@@ -137,6 +138,18 @@ ${UNINSTALL}:
 >		echo ${STOW} --ignore=".*.shtpl" --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
 >		${STOW} --ignore=".*.shtpl" --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
 >	done
+
+.PHONY: ${CHMOD_FILES}
+${CHMOD_FILES}: ${COMMON_CONFIGS_FILE}
+>	chmod 600 "./${COMMON_CONFIGS_FILE}"
+>	chmod 600 "./aws/.aws/credentials"
+>	chmod 600 "./docker/.docker/config.json"
+>	chmod 644 "./git/.gitconfig"
+>	chmod 600 "./msmtp/.netrc"
+>	chmod 600 "./rclone/.rclone.conf"
+>	chmod 644 "./shell/.profile"
+>	chmod 600 "./ssh/.ssh/authorized_keys"
+>	chmod 644 "./ssh/.ssh/config"
 
 .PHONY: ${CLEAN}
 ${CLEAN}:
