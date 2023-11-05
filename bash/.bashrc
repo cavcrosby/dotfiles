@@ -123,7 +123,15 @@ fi
 
 if [ -d "${PYENV_ROOT}" ]; then
     eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
+    if [ -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]; then
+        old_path="${PATH}"
+        eval "$(pyenv virtualenv-init -)"
+
+        # tr is req'ed because 'grep --count' counts each occurence once per line
+        if [ "$(echo "${PATH}" | tr ':' '\n' | grep --count "${PYENV_ROOT}/plugins/pyenv-virtualenv/shims")" -gt 1 ]; then
+            PATH="${old_path}"
+        fi  
+    fi
 fi
 
 # dynamic path means file existence is not guaranteed for sourcing (SC1091)
@@ -135,5 +143,13 @@ fi
 [ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
 
 if [ -d "${HOME}/.rbenv" ]; then
+    old_path="${PATH}"
     eval "$("${HOME}"/.rbenv/bin/rbenv init - bash)"
+
+    if [ "$(echo "${PATH}" | tr ':' '\n' | grep --count "${HOME}/.rbenv/shims")" -gt 1 ]; then
+        PATH="${old_path}"
+    fi
 fi
+unset -v old_path
+
+export PATH
