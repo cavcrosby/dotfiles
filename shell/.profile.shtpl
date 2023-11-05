@@ -33,11 +33,6 @@ if [ -d "${GOPATH}/bin" ]; then
     PATH="${GOPATH}/bin:${PATH}"
 fi
 
-if [ -d "${PYENV_ROOT}" ]; then
-    PATH="${PYENV_ROOT}/bin:${PATH}"
-    eval "$(pyenv init -)"
-fi
-
 # LOCAL_PROFILE is a shell tpl var, something shellcheck cannot source (SC1091)
 # shellcheck source=/dev/null
 [ -r "${HOME}/${LOCAL_PROFILE}" ] && . "${HOME}/${LOCAL_PROFILE}"

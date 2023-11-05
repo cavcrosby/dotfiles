@@ -122,9 +122,14 @@ if ! shopt -oq posix; then
 fi
 
 if [ -d "${PYENV_ROOT}" ]; then
+    old_path="${PATH}"
+    PATH="${PYENV_ROOT}/bin:${PATH}"
     eval "$(pyenv init -)"
+    
+    if [ "$(echo "${PATH}" | tr ':' '\n' | grep --count "${PYENV_ROOT}/bin")" -gt 1 ]; then
+        PATH="${old_path}"
+    fi
     if [ -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]; then
-        old_path="${PATH}"
         eval "$(pyenv virtualenv-init -)"
 
         # tr is req'ed because 'grep --count' counts each occurence once per line
