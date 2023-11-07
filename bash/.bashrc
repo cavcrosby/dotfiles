@@ -2,7 +2,7 @@
 # shellcheck disable=SC2148 # not an executable
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
-if ! echo "$-" | grep --quiet "i"; then
+if ! printf '%s\n' "$-" | grep --quiet "i"; then
     return
 fi
 
@@ -30,54 +30,62 @@ make() {
     command make --include-dir "${HOME}/.local/include/cavcrosby-makefiles" "$@"
 }
 
-chktooling() {
+_printf_ok() {
     if (( ANSI_COLOR_SUPPORT )); then
-        local -r OK='\033[00;32mok\033[m'
-        local -r ERROR='\033[00;31merror\033[m'
+        printf '%s \033[00;32mok\033[m\n' "$1"
     else
-        local -r OK="ok"
-        local -r ERROR="error"
+        printf '%s ok\n' "$1"
     fi
+}
 
+_printf_error() {
+    if (( ANSI_COLOR_SUPPORT )); then
+        printf '%s \033[00;31merror\033[m %s\n' "$1" "$2" >&2
+    else
+        printf '%s error %s\n' "$1" "$2" >&2
+    fi
+}
+
+chktooling() {
     local log_file_path
     if [ "$(command -v aws)" ]; then
         log_file_path="$(mktemp --tmpdir "aws-cli.log.$(date "+%b_%d_%H_%M_%S_%N")XXX")"
         if aws sts get-caller-identity > "${log_file_path}" 2>&1; then
-            echo -e "checking aws-cli credentials... ${OK}"
+            _printf_ok "checking aws-cli credentials..."
         else
-            echo -e "checking aws-cli credentials... ${ERROR} see ${log_file_path}" >&2
+            _printf_error "checking aws-cli credentials..." "see ${log_file_path}"
         fi
     fi
 
     if [ "$(command -v docker)" ]; then
         log_file_path="$(mktemp --tmpdir "docker.log.$(date "+%b_%d_%H_%M_%S_%N")XXX")"
         if docker login > "${log_file_path}" 2>&1; then
-            echo -e "checking docker hub credentials... ${OK}"
+            _printf_ok "checking docker hub credentials..."
         else
-            echo -e "checking docker hub credentials... ${ERROR} see ${log_file_path}" >&2
+            _printf_error "checking docker hub credentials..." "see ${log_file_path}"
         fi
     fi
 
     if [ "$(command -v msmtp)" ]; then
-        if echo "hello there cavcrosby" \
+        if printf '%s\n' "hello there cavcrosby" \
             | msmtp \
                 --account "gmail" \
                 "cavcrosby@gmail.com" \
                 > "/dev/null" \
                 2>&1; \
         then
-            echo -e "checking gmail smtp credentials... ${OK}"
+            _printf_ok "checking gmail smtp credentials..."
         else
-            echo -e "checking gmail smtp credentials... ${ERROR} see ${HOME}/.msmtp.log" >&2
+            _printf_error "checking gmail smtp credentials..." "see ${HOME}/.msmtp.log"
         fi
     fi
 
     if [ "$(command -v rclone)" ]; then
         log_file_path="$(mktemp --tmpdir "rclone.log.$(date "+%b_%d_%H_%M_%S_%N")XXX")"
         if rclone ls --max-depth 1 "crosbyco3:/" > "${log_file_path}" 2>&1; then
-            echo -e "checking drive token blob for crosbyco3... ${OK}"
+            _printf_ok "checking drive token blob for crosbyco3..."
         else
-            echo -e "checking drive token blob for crosbyco3... ${ERROR} see ${log_file_path}" >&2
+            _printf_error "checking drive token blob for crosbyco3..." "see ${log_file_path}"
         fi
     fi
 }
@@ -126,14 +134,14 @@ if [ -d "${PYENV_ROOT}" ]; then
     PATH="${PYENV_ROOT}/bin:${PATH}"
     eval "$(pyenv init -)"
     
-    if [ "$(echo "${PATH}" | tr ':' '\n' | grep --count "${PYENV_ROOT}/bin")" -gt 1 ]; then
+    if [ "$(printf '%s\n' "${PATH}" | tr ':' '\n' | grep --count "${PYENV_ROOT}/bin")" -gt 1 ]; then
         PATH="${old_path}"
     fi
     if [ -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]; then
         eval "$(pyenv virtualenv-init -)"
 
         # tr is req'ed because 'grep --count' counts each occurence once per line
-        if [ "$(echo "${PATH}" | tr ':' '\n' | grep --count "${PYENV_ROOT}/plugins/pyenv-virtualenv/shims")" -gt 1 ]; then
+        if [ "$(printf '%s\n' "${PATH}" | tr ':' '\n' | grep --count "${PYENV_ROOT}/plugins/pyenv-virtualenv/shims")" -gt 1 ]; then
             PATH="${old_path}"
         fi  
     fi
@@ -151,7 +159,7 @@ if [ -d "${HOME}/.rbenv" ]; then
     old_path="${PATH}"
     eval "$("${HOME}"/.rbenv/bin/rbenv init - bash)"
 
-    if [ "$(echo "${PATH}" | tr ':' '\n' | grep --count "${HOME}/.rbenv/shims")" -gt 1 ]; then
+    if [ "$(printf '%s\n' "${PATH}" | tr ':' '\n' | grep --count "${HOME}/.rbenv/shims")" -gt 1 ]; then
         PATH="${old_path}"
     fi
 fi
