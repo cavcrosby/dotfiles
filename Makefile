@@ -54,7 +54,7 @@ export MSMTP_GMAIL_PASSWORD=""
 export GIT_SIGNING_KEY_ID=""
 export DOCKER_HUB_API_TOKEN=""
 
-ENCODED_DOCKER_HUB_AUTH_STR="$$(echo -n "cavcrosby:$${DOCKER_HUB_API_TOKEN}" | base64)"
+ENCODED_DOCKER_HUB_AUTH_STR="$$(printf '%s' "cavcrosby:$${DOCKER_HUB_API_TOKEN}" | base64)"
 export ENCODED_DOCKER_HUB_AUTH_STR
 _EOF_
 endef
@@ -82,7 +82,7 @@ raw_pkg_file_paths := $(shell find . -mindepth 2 \( -type f \) \
 	-and \( ! -name .stow-local-ignore \) \
 	-and \( -printf '%P ' \) \
 )
-pkg_file_paths := $(shell echo "$(patsubst %.shtpl,%,${raw_pkg_file_paths})" | tr ' ' '\n' | sort --unique)
+pkg_file_paths := $(shell printf '%s\n' "$(patsubst %.shtpl,%,${raw_pkg_file_paths})" | tr ' ' '\n' | sort --unique)
 
 # inspired from:
 # https://stackoverflow.com/questions/5618615/check-if-a-program-exists-from-a-makefile#answer-25668869
@@ -91,14 +91,14 @@ _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${ex
 .PHONY: ${HELP}
 ${HELP}:
 	# inspired by the makefiles of the Linux kernel and Mercurial
->	@echo 'Common make targets:'
->	@echo '  ${COMMON_CONFIGS_FILE}          - the configuration file to be used by the'
->	@echo '                   package files that come from a shell template'
->	@echo '  ${PKG_FILES}      - create package files that come from a shell template (.shtpl)'
->	@echo '  ${LOCAL_DOTFILES} - create local dotfiles not tracked by version control'
->	@echo '  ${INSTALL}        - link all the package files to their appropriate places'
->	@echo '  ${UNINSTALL}      - remove links that were inserted by the install target'
->	@echo '  ${CLEAN}          - remove files generated from the "pkg-files" target'
+>	@printf '%s\n' 'Common make targets:'
+>	@printf '%s\n' '  ${COMMON_CONFIGS_FILE}          - the configuration file to be used by the'
+>	@printf '%s\n' '                   package files that come from a shell template'
+>	@printf '%s\n' '  ${PKG_FILES}      - create package files that come from a shell template (.shtpl)'
+>	@printf '%s\n' '  ${LOCAL_DOTFILES} - create local dotfiles not tracked by version control'
+>	@printf '%s\n' '  ${INSTALL}        - link all the package files to their appropriate places'
+>	@printf '%s\n' '  ${UNINSTALL}      - remove links that were inserted by the install target'
+>	@printf '%s\n' '  ${CLEAN}          - remove files generated from the "pkg-files" target'
 
 ${COMMON_CONFIGS_FILE}:
 >	eval "$${_COMMON_CONFIGS_FILE}" > "./${COMMON_CONFIGS_FILE}"
@@ -107,7 +107,7 @@ ${COMMON_CONFIGS_FILE}:
 ${RMPLAIN_FILES}: private .SHELLFLAGS := -cx
 ${RMPLAIN_FILES}: private export PS4 :=
 ${RMPLAIN_FILES}:
->	@for pkg_file_path in $$(echo "${pkg_file_paths}" | sed --regexp-extended 's_^\w+/| \w+/_ _g'); do \
+>	@for pkg_file_path in $$(printf '%s\n' "${pkg_file_paths}" | sed --regexp-extended 's_^\w+/| \w+/_ _g'); do \
 >		if [ -e "$${HOME}/$${pkg_file_path}" ] && ! [ -L "$${HOME}/$${pkg_file_path}" ]; then \
 >			rm --force "$${HOME}/$${pkg_file_path}"; \
 >		fi; \
@@ -126,7 +126,7 @@ ${LOCAL_DOTFILES}:
 .PHONY: ${INSTALL}
 ${INSTALL}: ${pkg_file_paths}
 >	@for pkg in ${stow_pkgs}; do \
->		echo ${STOW} --no-folding --ignore=".*.shtpl" --target="${DESTDIR}$${HOME}" "$${pkg}"; \
+>		printf '%s\n' "${STOW} --no-folding --ignore=\".*.shtpl\" --target=\"${DESTDIR}$${HOME}\" \"$${pkg}\""; \
 >		${STOW} --no-folding --ignore=".*.shtpl" --target="${DESTDIR}$${HOME}" "$${pkg}"; \
 >	done
 
@@ -135,7 +135,7 @@ ${INSTALL}: ${pkg_file_paths}
 .PHONY: ${UNINSTALL}
 ${UNINSTALL}:
 >	@for pkg in ${stow_pkgs}; do \
->		echo ${STOW} --ignore=".*.shtpl" --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
+>		printf '%s\n' "${STOW} --ignore=\".*.shtpl\" --target=\"${DESTDIR}$${HOME}\" --delete \"$${pkg}\""; \
 >		${STOW} --ignore=".*.shtpl" --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
 >	done
 
