@@ -9,8 +9,3 @@
 	gpgSign = true
 [credential]
 	helper = store
-[alias]
-	unstage = restore --staged
-	discard = restore
-	lastci = log -1
-	lastp = log -p -1
