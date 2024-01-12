@@ -9,3 +9,5 @@
 	gpgSign = true
 [credential]
 	helper = store
+[pull]
+	rebase = true
