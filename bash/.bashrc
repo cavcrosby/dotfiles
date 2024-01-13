@@ -14,6 +14,11 @@ HISTFILESIZE="${HISTABSOLUTESIZE}"
 HISTCONTROL="ignoredups:ignorespace"
 if (tput setaf && tput setab) > "/dev/null" 2>&1; then
     ANSI_COLOR_SUPPORT=1 # true
+    enter_bold_mode="$(tput bold)"
+    color_red="$(tput setaf 1)"
+    color_green="$(tput setaf 2)"
+    color_blue="$(tput setaf 4)"
+    exit_attr_mode="$(tput sgr0)"
 else
     ANSI_COLOR_SUPPORT=0 # false
 fi
@@ -32,7 +37,7 @@ make() {
 
 _printf_ok() {
     if (( ANSI_COLOR_SUPPORT )); then
-        printf '%s \033[00;32mok\033[m\n' "$1"
+        printf '%s %bok%b\n' "$1" "${color_green}" "${exit_attr_mode}"
     else
         printf '%s ok\n' "$1"
     fi
@@ -40,7 +45,7 @@ _printf_ok() {
 
 _printf_error() {
     if (( ANSI_COLOR_SUPPORT )); then
-        printf '%s \033[00;31merror\033[m %s\n' "$1" "$2" >&2
+        printf '%s %berror%b %s\n' "$1" "${color_red}" "${exit_attr_mode}" "$2" >&2
     else
         printf '%s error %s\n' "$1" "$2" >&2
     fi
@@ -95,7 +100,7 @@ chktooling() {
 [ -x "/usr/bin/lesspipe" ] && eval "$(lesspipe)"
 
 if (( ANSI_COLOR_SUPPORT )); then
-    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[1;34m\]\W\[\033[00m\]$ '
+    PS1='\[${enter_bold_mode}${color_green}\]\u@\h\[${exit_attr_mode}\]:\[${enter_bold_mode}${color_blue}\]\W\[${exit_attr_mode}\]$ '
 else
     PS1='\u@\h:\w\$ '
 fi
