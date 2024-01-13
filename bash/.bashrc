@@ -100,7 +100,7 @@ chktooling() {
 [ -x "/usr/bin/lesspipe" ] && eval "$(lesspipe)"
 
 if (( ANSI_COLOR_SUPPORT )); then
-    PS1='\[${enter_bold_mode}${color_green}\]\u@\h\[${exit_attr_mode}\]:\[${enter_bold_mode}${color_blue}\]\W\[${exit_attr_mode}\]$ '
+    PS1='\[${enter_bold_mode}${color_green}\]\u@\h\[${exit_attr_mode}\]:\[${enter_bold_mode}${color_blue}\]\W\[${exit_attr_mode}\]\$ '
 else
     PS1='\u@\h:\w\$ '
 fi
