@@ -9,6 +9,9 @@
 	gpgSign = true
 [credential]
 	helper = store
+[sendemail]
+	to = cavcrosby@gmail.com
+	sendmailCmd = /usr/bin/msmtp
 [init]
 	defaultBranch = main
 [pull]
