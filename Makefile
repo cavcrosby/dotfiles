@@ -28,6 +28,7 @@ TMUX_PKG = tmux
 RCLONE_PKG = rclone
 DOCKER_PKG = docker
 AWS_PKG = aws
+MOZILLA_PKG = mozilla
 
 stow_pkgs = \
 	${BASH_PKG}\
@@ -38,7 +39,8 @@ stow_pkgs = \
 	${TMUX_PKG}\
 	${RCLONE_PKG}\
 	${DOCKER_PKG}\
-	${AWS_PKG}
+	${AWS_PKG}\
+	${MOZILLA_PKG}
 
 define _COMMON_CONFIGS_FILE =
 cat << '_EOF_'
@@ -145,6 +147,7 @@ ${CHMOD_FILES}: ${COMMON_CONFIGS_FILE}
 >	chmod 600 "./aws/.aws/credentials"
 >	chmod 600 "./docker/.docker/config.json"
 >	chmod 644 "./git/.gitconfig"
+>	chmod 644 "./mozilla/.mozilla/firefox/1m544c8z.default-release/user.js"
 >	chmod 600 "./msmtp/.netrc"
 >	chmod 600 "./rclone/.rclone.conf"
 >	chmod 644 "./shell/.profile"
