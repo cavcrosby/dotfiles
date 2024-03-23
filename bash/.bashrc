@@ -29,7 +29,6 @@ alias l="ls -CF"
 if ! [ -x "$(command -v kubectl)" ] && [ -x "$(command -v minikube)" ]; then
     alias kubectl="minikube kubectl --"
 fi
-alias docker='env --chdir "${HOME}/.docker" docker'
 
 make() {
     command make --include-dir "${HOME}/.local/include/cavcrosby-makefiles" "$@"
@@ -64,7 +63,7 @@ chktooling() {
 
     if [ "$(command -v docker)" ]; then
         log_file_path="$(mktemp --tmpdir "docker.log.$(date "+%b_%d_%H_%M_%S_%N")XXX")"
-        if docker login > "${log_file_path}" 2>&1; then
+        if env --chdir "${HOME}/.docker" docker login > "${log_file_path}" 2>&1; then
             _printf_ok "checking docker hub credentials..."
         else
             _printf_error "checking docker hub credentials..." "see ${log_file_path}"
