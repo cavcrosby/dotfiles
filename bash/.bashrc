@@ -53,7 +53,7 @@ _printf_error() {
 chktooling() {
     local log_file_path
     if [ "$(command -v aws)" ]; then
-        log_file_path="$(mktemp --tmpdir "aws-cli.log.$(date "+%b_%d_%H_%M_%S_%N")XXX")"
+        log_file_path="$(mktemp --tmpdir "aws-cli.log.$(date '+%Y-%m-%dT%H:%M:%S')-XXX")"
         if aws sts get-caller-identity > "${log_file_path}" 2>&1; then
             _printf_ok "checking aws-cli credentials..."
         else
@@ -62,7 +62,7 @@ chktooling() {
     fi
 
     if [ "$(command -v docker)" ]; then
-        log_file_path="$(mktemp --tmpdir "docker.log.$(date "+%b_%d_%H_%M_%S_%N")XXX")"
+        log_file_path="$(mktemp --tmpdir "docker.log.$(date '+%Y-%m-%dT%H:%M:%S')-XXX")"
         if env --chdir "${HOME}/.docker" docker login > "${log_file_path}" 2>&1; then
             _printf_ok "checking docker hub credentials..."
         else
@@ -85,7 +85,7 @@ chktooling() {
     fi
 
     if [ "$(command -v rclone)" ]; then
-        log_file_path="$(mktemp --tmpdir "rclone.log.$(date "+%b_%d_%H_%M_%S_%N")XXX")"
+        log_file_path="$(mktemp --tmpdir "rclone.log.$(date '+%Y-%m-%dT%H:%M:%S')-XXX")"
         if rclone ls --max-depth 1 "crosbyco3:/" > "${log_file_path}" 2>&1; then
             _printf_ok "checking drive token blob for crosbyco3..."
         else
