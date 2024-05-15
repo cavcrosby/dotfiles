@@ -77,7 +77,10 @@ executables = \
 	${STOW}
 
 # simply expanded variables
-raw_pkg_file_paths := $(shell find . -mindepth 2 \( -type f \) \
+raw_pkg_file_paths := $(shell find \
+	. \
+	-mindepth 2 \
+	\( -type f \) \
 	-and \( ! -path './.git*' \) \
 	-and \( ! -name .stow-local-ignore \) \
 	-and \( -printf '%P ' \) \
