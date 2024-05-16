@@ -14,5 +14,7 @@
 	sendmailCmd = /usr/bin/msmtp
 [init]
 	defaultBranch = main
+[fetch]
+	prune = true
 [pull]
 	rebase = true
