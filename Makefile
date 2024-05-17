@@ -15,7 +15,6 @@ local_config_files_vars = \
 	$${_AWS_ACCESS_KEY_ID}\
 	$${_AWS_SECRET_ACCESS_KEY}\
 	$${MSMTP_GMAIL_PASSWORD}\
-	$${GIT_SIGNING_KEY_ID}\
 	$${ENCODED_DOCKER_HUB_AUTH_STR}
 
 # stow pkgs
@@ -53,7 +52,6 @@ export _RCLONE_DRIVE_ROOT_FOLDER_ID=""
 export _AWS_ACCESS_KEY_ID=""
 export _AWS_SECRET_ACCESS_KEY=""
 export MSMTP_GMAIL_PASSWORD=""
-export GIT_SIGNING_KEY_ID=""
 export DOCKER_HUB_API_TOKEN=""
 
 ENCODED_DOCKER_HUB_AUTH_STR="$$(printf '%s' "cavcrosby:$${DOCKER_HUB_API_TOKEN}" | base64)"
@@ -149,7 +147,6 @@ ${CHMOD_FILES}: ${COMMON_CONFIGS_FILE}
 >	chmod 600 "./${COMMON_CONFIGS_FILE}"
 >	chmod 600 "./aws/.aws/credentials"
 >	chmod 600 "./docker/.docker/config.json"
->	chmod 644 "./git/.gitconfig"
 >	chmod 664 "./mozilla/.mozilla/firefox/installs.ini"
 >	chmod 664 "./mozilla/.mozilla/firefox/profiles.ini"
 >	chmod 600 "./msmtp/.netrc"
