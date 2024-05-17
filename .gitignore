@@ -11,7 +11,7 @@ docker/.docker/*
 !docker/.docker/config.json.shtpl
 
 git/*
-!git/.gitconfig.shtpl
+!git/.gitconfig
 !git/.gitignore
 !git/.stow-local-ignore
 

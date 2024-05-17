@@ -15,7 +15,6 @@ local_config_files_vars = \
 	$${_AWS_ACCESS_KEY_ID}\
 	$${_AWS_SECRET_ACCESS_KEY}\
 	$${MSMTP_GMAIL_PASSWORD}\
-	$${GIT_SIGNING_KEY_ID}\
 	$${ENCODED_DOCKER_HUB_AUTH_STR}
 
 # stow pkgs
@@ -51,7 +50,6 @@ export _RCLONE_DRIVE_ROOT_FOLDER_ID=""
 export _AWS_ACCESS_KEY_ID=""
 export _AWS_SECRET_ACCESS_KEY=""
 export MSMTP_GMAIL_PASSWORD=""
-export GIT_SIGNING_KEY_ID=""
 export DOCKER_HUB_API_TOKEN=""
 
 ENCODED_DOCKER_HUB_AUTH_STR="$$(printf '%s' "cavcrosby:$${DOCKER_HUB_API_TOKEN}" | base64)"
