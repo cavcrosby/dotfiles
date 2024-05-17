@@ -1,7 +1,7 @@
 [user]
 	name = Conner Crosby
 	email = cavcrosby@gmail.com
-	signingKey = ${GIT_SIGNING_KEY_ID}
+	signingKey = 85D65820AAA7CC76
 [core]
 	editor = codium --wait
 	excludesFile = /home/conner/.gitignore
