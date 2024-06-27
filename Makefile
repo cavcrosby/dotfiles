@@ -15,7 +15,8 @@ local_config_files_vars = \
 	$${_AWS_ACCESS_KEY_ID}\
 	$${_AWS_SECRET_ACCESS_KEY}\
 	$${MSMTP_GMAIL_PASSWORD}\
-	$${ENCODED_DOCKER_HUB_AUTH_STR}
+	$${ENCODED_DOCKER_HUB_AUTH_STR}\
+	$${HOME}
 
 # stow pkgs
 BASH_PKG = bash
@@ -28,6 +29,7 @@ RCLONE_PKG = rclone
 DOCKER_PKG = docker
 AWS_PKG = aws
 MOZILLA_PKG = mozilla
+NAUTILUS_PKG = nautilus
 
 stow_pkgs = \
 	${BASH_PKG}\
@@ -39,7 +41,8 @@ stow_pkgs = \
 	${RCLONE_PKG}\
 	${DOCKER_PKG}\
 	${AWS_PKG}\
-	${MOZILLA_PKG}
+	${MOZILLA_PKG}\
+	${NAUTILUS_PKG}
 
 define _COMMON_CONFIGS_FILE =
 cat << '_EOF_'
@@ -150,6 +153,7 @@ ${CHMOD_FILES}: ${COMMON_CONFIGS_FILE}
 >	chmod 664 "./mozilla/.mozilla/firefox/installs.ini"
 >	chmod 664 "./mozilla/.mozilla/firefox/profiles.ini"
 >	chmod 600 "./msmtp/.netrc"
+>	chmod 664 "./nautilus/.config/gtk-3.0/bookmarks"
 >	chmod 600 "./rclone/.rclone.conf"
 >	chmod 644 "./shell/.profile"
 >	chmod 600 "./ssh/.ssh/authorized_keys"

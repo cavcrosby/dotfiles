@@ -19,6 +19,9 @@ msmtp/*
 !msmtp/.msmtprc
 !msmtp/.netrc.shtpl
 
+nautilus/.config/gtk-3.0/*
+!nautilus/.config/gtk-3.0/bookmarks.shtpl
+
 rclone/*
 !rclone/.rclone.conf.shtpl
 
