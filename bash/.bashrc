@@ -30,10 +30,6 @@ if ! [ -x "$(command -v kubectl)" ] && [ -x "$(command -v minikube)" ]; then
     alias kubectl="minikube kubectl --"
 fi
 
-make() {
-    command make --include-dir "${HOME}/.local/include/cavcrosby-makefiles" "$@"
-}
-
 _printf_ok() {
     if (( ANSI_COLOR_SUPPORT )); then
         printf '%s %bok%b\n' "$1" "${color_green}" "${exit_attr_mode}"
