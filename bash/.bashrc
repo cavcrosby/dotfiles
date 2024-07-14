@@ -94,6 +94,17 @@ chktooling() {
     fi
 }
 
+genpass() {
+    local passlen="$1"
+    tr \
+        --complement \
+        --delete \
+        '[:alnum:]!@#$%^&*' \
+        < "/dev/urandom" \
+        | head --bytes "${passlen}" \
+        | sed 's/$/\n/'
+}
+
 # Intended for the lesspipe provided on debian-like systems, see debian's
 # lesspipe(1).
 [ -x "/usr/bin/lesspipe" ] && eval "$(lesspipe)"
