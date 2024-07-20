@@ -1,6 +1,6 @@
-.conf
-aws/.aws/credentials
-docker/.docker/config.json
-msmtp/.netrc
-rclone/.rclone.conf
-shell/.profile
+/.conf
+/aws/.aws/credentials
+/docker/.docker/config.json
+/msmtp/.netrc
+/rclone/.rclone.conf
+/shell/.profile
