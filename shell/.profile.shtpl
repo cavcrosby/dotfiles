@@ -3,8 +3,6 @@
 # ~/.profile: executed by the command interpreter for login shells.
 
 GIT_REPOS_PATH="${HOME}/git"
-HG_REPOS_PATH="${HOME}/hg"
-SVN_REPOS_PATH="${HOME}/svn"
 PYENV_ROOT="${HOME}/.pyenv"
 NVM_DIR="${HOME}/.nvm"
 DEBEMAIL="cavcrosby@gmail.com"
@@ -37,5 +35,5 @@ fi
 # shellcheck source=/dev/null
 [ -r "${HOME}/${LOCAL_PROFILE}" ] && . "${HOME}/${LOCAL_PROFILE}"
 
-export GIT_REPOS_PATH HG_REPOS_PATH SVN_REPOS_PATH PYENV_ROOT NVM_DIR DEBEMAIL \
-    DEBFULLNAME EDITOR GOPATH PATH
+export GIT_REPOS_PATH PYENV_ROOT NVM_DIR DEBEMAIL DEBFULLNAME EDITOR GOPATH \
+    PATH
