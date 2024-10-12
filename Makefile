@@ -30,6 +30,7 @@ RCLONE_PKG = rclone
 DOCKER_PKG = docker
 AWS_PKG = aws
 MOZILLA_PKG = mozilla
+LOCAL = local
 
 STOW_PKGS = \
 	${BASH_PKG}\
@@ -41,7 +42,8 @@ STOW_PKGS = \
 	${RCLONE_PKG}\
 	${DOCKER_PKG}\
 	${AWS_PKG}\
-	${MOZILLA_PKG}
+	${MOZILLA_PKG}\
+	${LOCAL}
 
 define _COMMON_CONFIGS_FILE =
 cat << '_EOF_'
@@ -128,8 +130,8 @@ ${PKG_FILES}: ${pkg_file_paths}
 
 .PHONY: ${LOCAL_DOTFILES}
 ${LOCAL_DOTFILES}:
->	touch "$${HOME}/${LOCAL_PROFILE}"
->	touch "$${HOME}/${LOCAL_GITCONFIG}"
+>	touch "${LOCAL}/${LOCAL_PROFILE}"
+>	touch "${LOCAL}/${LOCAL_GITCONFIG}"
 
 .PHONY: ${INSTALL}
 ${INSTALL}: ${pkg_file_paths}
