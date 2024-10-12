@@ -7,9 +7,11 @@ SHELL = /usr/bin/sh
 
 # shell template variables
 COMMON_CONFIGS_FILE = .conf
-export LOCAL_PROFILE = .profile_local
+export LOCAL_PROFILE = .profile.local
+export LOCAL_GITCONFIG = .gitconfig.local
 local_config_files_vars = \
 	$${LOCAL_PROFILE}\
+	$${LOCAL_GITCONFIG}\
 	$${_RCLONE_DRIVE_TOKEN}\
 	$${_RCLONE_DRIVE_ROOT_FOLDER_ID}\
 	$${_AWS_ACCESS_KEY_ID}\
@@ -28,7 +30,7 @@ RCLONE_PKG = rclone
 DOCKER_PKG = docker
 AWS_PKG = aws
 
-stow_pkgs = \
+STOW_PKGS = \
 	${BASH_PKG}\
 	${GIT_PKG}\
 	${SHELL_PKG}\
@@ -100,6 +102,8 @@ ${HELP}:
 >	@printf '%s\n' '  ${INSTALL}        - link all the package files to their appropriate places'
 >	@printf '%s\n' '  ${UNINSTALL}      - remove links that were inserted by the install target'
 >	@printf '%s\n' '  ${CLEAN}          - remove files generated from the "pkg-files" target'
+>	@printf '%s\n' 'Common make configurations (e.g. make [config]=1 [targets]):'
+>	@printf '%s\n' '  STOW_PKGS      - chooses the Stow packages to install'
 
 ${COMMON_CONFIGS_FILE}:
 >	eval "$${_COMMON_CONFIGS_FILE}" > "./${COMMON_CONFIGS_FILE}"
@@ -123,10 +127,11 @@ ${PKG_FILES}: ${pkg_file_paths}
 .PHONY: ${LOCAL_DOTFILES}
 ${LOCAL_DOTFILES}:
 >	touch "$${HOME}/${LOCAL_PROFILE}"
+>	touch "$${HOME}/${LOCAL_GITCONFIG}"
 
 .PHONY: ${INSTALL}
 ${INSTALL}: ${pkg_file_paths}
->	@for pkg in ${stow_pkgs}; do \
+>	@for pkg in ${STOW_PKGS}; do \
 >		printf '%s\n' "${STOW} --no-folding --ignore=\".*.shtpl\" --target=\"${DESTDIR}$${HOME}\" \"$${pkg}\""; \
 >		${STOW} --no-folding --ignore=".*.shtpl" --target="${DESTDIR}$${HOME}" "$${pkg}"; \
 >	done
@@ -135,7 +140,7 @@ ${INSTALL}: ${pkg_file_paths}
 # https://github.com/aspiers/stow/issues/65
 .PHONY: ${UNINSTALL}
 ${UNINSTALL}:
->	@for pkg in ${stow_pkgs}; do \
+>	@for pkg in ${STOW_PKGS}; do \
 >		printf '%s\n' "${STOW} --ignore=\".*.shtpl\" --target=\"${DESTDIR}$${HOME}\" --delete \"$${pkg}\""; \
 >		${STOW} --ignore=".*.shtpl" --target="${DESTDIR}$${HOME}" --delete "$${pkg}"; \
 >	done

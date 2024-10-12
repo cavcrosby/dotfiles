@@ -18,3 +18,5 @@
 	prune = true
 [pull]
 	rebase = true
+[include]
+	path = /home/conner/${LOCAL_GITCONFIG}
