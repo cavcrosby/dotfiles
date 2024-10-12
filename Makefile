@@ -29,6 +29,7 @@ TMUX_PKG = tmux
 RCLONE_PKG = rclone
 DOCKER_PKG = docker
 AWS_PKG = aws
+LOCAL = local
 
 STOW_PKGS = \
 	${BASH_PKG}\
@@ -39,7 +40,8 @@ STOW_PKGS = \
 	${TMUX_PKG}\
 	${RCLONE_PKG}\
 	${DOCKER_PKG}\
-	${AWS_PKG}
+	${AWS_PKG}\
+	${LOCAL}
 
 define _COMMON_CONFIGS_FILE =
 cat << '_EOF_'
@@ -126,8 +128,8 @@ ${PKG_FILES}: ${pkg_file_paths}
 
 .PHONY: ${LOCAL_DOTFILES}
 ${LOCAL_DOTFILES}:
->	touch "$${HOME}/${LOCAL_PROFILE}"
->	touch "$${HOME}/${LOCAL_GITCONFIG}"
+>	touch "${LOCAL}/${LOCAL_PROFILE}"
+>	touch "${LOCAL}/${LOCAL_GITCONFIG}"
 
 .PHONY: ${INSTALL}
 ${INSTALL}: ${pkg_file_paths}
