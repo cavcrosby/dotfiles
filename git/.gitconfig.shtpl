@@ -4,7 +4,7 @@
 	signingKey = 85D65820AAA7CC76
 [core]
 	editor = codium --wait
-	excludesFile = /home/conner/.gitignore
+	excludesFile = ~/.gitignore
 [commit]
 	gpgSign = true
 [credential]
@@ -19,4 +19,4 @@
 [pull]
 	rebase = true
 [include]
-	path = /home/conner/${LOCAL_GITCONFIG}
+	path = ~/${LOCAL_GITCONFIG}
