@@ -101,6 +101,14 @@ genpass() {
         | sed 's/$/\n/'
 }
 
+ssh_keygen() {
+    ssh-keygen \
+        -t "ed25519" \
+        -C "${LOGNAME}@${HOSTNAME} $(date)" \
+        -f "${HOME}/.ssh/id_ed25519" \
+        -N ""
+}
+
 # Intended for the lesspipe provided on debian-like systems, see debian's
 # lesspipe(1).
 [ -x "/usr/bin/lesspipe" ] && eval "$(lesspipe)"
