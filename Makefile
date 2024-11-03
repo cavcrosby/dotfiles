@@ -17,7 +17,8 @@ local_config_files_vars = \
 	$${_AWS_ACCESS_KEY_ID}\
 	$${_AWS_SECRET_ACCESS_KEY}\
 	$${MSMTP_GMAIL_PASSWORD}\
-	$${ENCODED_DOCKER_HUB_AUTH_STR}
+	$${ENCODED_DOCKER_HUB_AUTH_STR}\
+	$${GITHUB_ACCESS_TOKEN}
 
 # stow pkgs
 BASH_PKG = bash
@@ -55,6 +56,7 @@ export _AWS_ACCESS_KEY_ID=""
 export _AWS_SECRET_ACCESS_KEY=""
 export MSMTP_GMAIL_PASSWORD=""
 export DOCKER_HUB_API_TOKEN=""
+export GITHUB_ACCESS_TOKEN=""
 
 ENCODED_DOCKER_HUB_AUTH_STR="$$(printf '%s' "cavcrosby:$${DOCKER_HUB_API_TOKEN}" | base64)"
 export ENCODED_DOCKER_HUB_AUTH_STR
@@ -152,6 +154,7 @@ ${CHMOD_FILES}: ${COMMON_CONFIGS_FILE}
 >	chmod 600 "./${COMMON_CONFIGS_FILE}"
 >	chmod 600 "./aws/.aws/credentials"
 >	chmod 600 "./docker/.docker/config.json"
+>	chmod 600 "./git/.git-credentials"
 >	chmod 644 "./git/.gitconfig"
 >	chmod 600 "./msmtp/.netrc"
 >	chmod 600 "./rclone/.rclone.conf"

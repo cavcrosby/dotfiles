@@ -1,6 +1,7 @@
 /.conf
 /aws/.aws/credentials
 /docker/.docker/config.json
+/git/.git-credentials
 /git/.gitconfig
 /msmtp/.netrc
 /rclone/.rclone.conf
