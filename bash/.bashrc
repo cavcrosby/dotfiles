@@ -151,7 +151,7 @@ fi
 if [ -d "${PYENV_ROOT}" ]; then
     old_path="${PATH}"
     PATH="${PYENV_ROOT}/bin:${PATH}"
-    eval "$(pyenv init -)"
+    eval "$(pyenv init - bash)"
     
     if [ "$(printf '%s\n' "${PATH}" | tr ':' '\n' | grep --count "${PYENV_ROOT}/bin")" -gt 1 ]; then
         PATH="${old_path}"
