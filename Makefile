@@ -7,10 +7,10 @@ SHELL = /usr/bin/sh
 
 # shell template variables
 COMMON_CONFIGS_FILE = .conf
-export LOCAL_PROFILE = .profile.local
+export LOCAL_RC = .rc.local
 export LOCAL_GITCONFIG = .gitconfig.local
 local_config_files_vars = \
-	$${LOCAL_PROFILE}\
+	$${LOCAL_RC}\
 	$${LOCAL_GITCONFIG}\
 	$${_RCLONE_DRIVE_TOKEN}\
 	$${_RCLONE_DRIVE_ROOT_FOLDER_ID}\
@@ -130,7 +130,7 @@ ${PKG_FILES}: ${pkg_file_paths}
 
 .PHONY: ${LOCAL_DOTFILES}
 ${LOCAL_DOTFILES}:
->	touch "${LOCAL}/${LOCAL_PROFILE}"
+>	touch "${LOCAL}/${LOCAL_RC}"
 >	touch "${LOCAL}/${LOCAL_GITCONFIG}"
 
 .PHONY: ${INSTALL}

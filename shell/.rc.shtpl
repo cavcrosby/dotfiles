@@ -1,6 +1,6 @@
 #
 # shellcheck disable=SC2148 # not an executable
-# ~/.profile: executed by the command interpreter for login shells.
+# ~/.rc: executed by the command interpreter for non-login shells.
 
 GIT_REPOS_PATH="${HOME}/git"
 PYENV_ROOT="${HOME}/.pyenv"
@@ -9,15 +9,7 @@ DEBEMAIL="cavcrosby@gmail.com"
 DEBFULLNAME="Conner Crosby"
 EDITOR="codium --wait"
 GOPATH="${HOME}/.local/go"
-common_path="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
-
-for path_node in $(printf '%s\n' "${PATH}" | tr ":" " "); do
-    if ! printf '%s\n' "${common_path}" | grep --quiet "${path_node}"; then
-        common_path="${path_node}:${common_path}"
-    fi
-done
-PATH="${common_path}"
-unset -v common_path
+PATH="/usr/local/games:/usr/local/bin:/usr/local/sbin:/usr/games:/usr/bin:/usr/sbin:/bin:/sbin"
 
 if [ -d "/usr/local/go/bin" ]; then
     PATH="/usr/local/go/bin:${PATH}"
@@ -31,9 +23,9 @@ if [ -d "${GOPATH}/bin" ]; then
     PATH="${GOPATH}/bin:${PATH}"
 fi
 
-# LOCAL_PROFILE is a shell tpl var, something shellcheck cannot source (SC1091)
+# LOCAL_RC is a shell tpl var, something shellcheck cannot source (SC1091)
 # shellcheck source=/dev/null
-[ -r "${HOME}/${LOCAL_PROFILE}" ] && . "${HOME}/${LOCAL_PROFILE}"
+[ -r "${HOME}/${LOCAL_RC}" ] && . "${HOME}/${LOCAL_RC}"
 
 export GIT_REPOS_PATH PYENV_ROOT NVM_DIR DEBEMAIL DEBFULLNAME EDITOR GOPATH \
     PATH

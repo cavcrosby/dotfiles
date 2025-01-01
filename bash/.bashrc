@@ -6,6 +6,9 @@ if ! printf '%s\n' "$-" | grep --quiet "i"; then
     return
 fi
 
+# shellcheck source=../shell/.rc
+[ -r "${HOME}/.rc" ] && . "${HOME}/.rc"
+
 shopt -s histappend checkwinsize
 
 HISTABSOLUTESIZE=2000
@@ -149,20 +152,11 @@ if ! shopt -oq posix; then
 fi
 
 if [ -d "${PYENV_ROOT}" ]; then
-    old_path="${PATH}"
     PATH="${PYENV_ROOT}/bin:${PATH}"
     eval "$(pyenv init - bash)"
-    
-    if [ "$(printf '%s\n' "${PATH}" | tr ':' '\n' | grep --count "${PYENV_ROOT}/bin")" -gt 1 ]; then
-        PATH="${old_path}"
-    fi
+
     if [ -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]; then
         eval "$(pyenv virtualenv-init -)"
-
-        # tr is req'ed because 'grep --count' counts each occurence once per line
-        if [ "$(printf '%s\n' "${PATH}" | tr ':' '\n' | grep --count "${PYENV_ROOT}/plugins/pyenv-virtualenv/shims")" -gt 1 ]; then
-            PATH="${old_path}"
-        fi  
     fi
 fi
 
@@ -175,13 +169,7 @@ fi
 [ -s "${NVM_DIR}/bash_completion" ] && . "${NVM_DIR}/bash_completion"
 
 if [ -d "${HOME}/.rbenv" ]; then
-    old_path="${PATH}"
     eval "$("${HOME}"/.rbenv/bin/rbenv init - bash)"
-
-    if [ "$(printf '%s\n' "${PATH}" | tr ':' '\n' | grep --count "${HOME}/.rbenv/shims")" -gt 1 ]; then
-        PATH="${old_path}"
-    fi
 fi
-unset -v old_path
 
 export PATH
