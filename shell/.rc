@@ -1,0 +1,26 @@
+#
+# shellcheck disable=SC2148 # not an executable
+# ~/.rc: executed by the command interpreter for non-login shells.
+
+GIT_REPOS_PATH="${HOME}/git"
+PYENV_ROOT="${HOME}/.pyenv"
+NVM_DIR="${HOME}/.nvm"
+DEBEMAIL="cavcrosby@gmail.com"
+DEBFULLNAME="Conner Crosby"
+EDITOR="codium --wait"
+GOPATH="${HOME}/.local/go"
+
+if [ -d "/usr/local/go/bin" ]; then
+    PATH="/usr/local/go/bin:${PATH}"
+fi
+
+if [ -d "${HOME}/.local/bin" ]; then
+    PATH="${HOME}/.local/bin:${PATH}"
+fi
+
+if [ -d "${GOPATH}/bin" ]; then
+    PATH="${GOPATH}/bin:${PATH}"
+fi
+
+export GIT_REPOS_PATH PYENV_ROOT NVM_DIR DEBEMAIL DEBFULLNAME EDITOR GOPATH \
+    PATH
