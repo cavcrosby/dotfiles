@@ -112,6 +112,17 @@ ssh_keygen() {
         -N ""
 }
 
+genpin() {
+    local pinlen="$1"
+    tr \
+        --complement \
+        --delete \
+        '[:digit:]' \
+        < "/dev/urandom" \
+        | head --bytes "${pinlen}" \
+        | sed 's/$/\n/'
+}
+
 # Intended for the lesspipe provided on debian-like systems, see debian's
 # lesspipe(1).
 [ -x "/usr/bin/lesspipe" ] && eval "$(lesspipe)"
