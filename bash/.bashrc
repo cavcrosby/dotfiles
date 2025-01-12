@@ -152,6 +152,7 @@ if ! shopt -oq posix; then
 fi
 
 if [ -d "${PYENV_ROOT}" ]; then
+    unset -v VIRTUAL_ENV
     PATH="${PYENV_ROOT}/bin:${PATH}"
     eval "$(pyenv init - bash)"
 
