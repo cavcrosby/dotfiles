@@ -8,7 +8,6 @@ NVM_DIR="${HOME}/.nvm"
 DEBEMAIL="cavcrosby@gmail.com"
 DEBFULLNAME="Conner Crosby"
 EDITOR="codium --wait"
-GOPATH="${HOME}/.local/go"
 PATH="/usr/local/games:/usr/local/bin:/usr/local/sbin:/usr/games:/usr/bin:/usr/sbin:/bin:/sbin"
 
 if [ -d "/usr/local/go/bin" ]; then
