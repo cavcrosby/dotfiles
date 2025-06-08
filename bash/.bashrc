@@ -123,8 +123,7 @@ genpin() {
         | sed 's/$/\n/'
 }
 
-# Intended for the lesspipe provided on debian-like systems, see debian's
-# lesspipe(1).
+# intended for debian's lesspipe(1) provided on debian-like OSes
 [ -x "/usr/bin/lesspipe" ] && eval "$(lesspipe)"
 
 if (( ANSI_COLOR_SUPPORT )); then
