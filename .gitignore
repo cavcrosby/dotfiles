@@ -1,3 +1,4 @@
+.python-version
 /.conf
 /aws/.aws/credentials
 /docker/.docker/config.json

@@ -6,7 +6,7 @@ if ! printf '%s\n' "$-" | grep --quiet "i"; then
     return
 fi
 
-# shellcheck source=../shell/.rc
+# shellcheck source=./shell/.rc
 [ -r "${HOME}/.rc" ] && . "${HOME}/.rc"
 
 shopt -s histappend checkwinsize

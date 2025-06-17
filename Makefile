@@ -70,6 +70,7 @@ export _COMMON_CONFIGS_FILE
 
 # targets
 HELP = help
+SETUP = setup
 PKG_FILES = pkg-files
 LOCAL_DOTFILES = local-dotfiles
 INSTALL = install
@@ -81,8 +82,12 @@ CLEAN = clean
 # executables
 ENVSUBST = envsubst
 STOW = stow
+PYTHON = python
+PIP = pip
+PRE_COMMIT = pre-commit
 executables = \
-	${STOW}
+	${STOW}\
+	${PYTHON}
 
 # simply expanded variables
 raw_pkg_file_paths := $(shell find \
@@ -103,6 +108,8 @@ _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${ex
 ${HELP}:
 	# inspired by the makefiles of the Linux kernel and Mercurial
 >	@printf '%s\n' 'Common make targets:'
+>	@printf '%s\n' '  ${SETUP}          - installs the distro-independent dependencies for this'
+>	@printf '%s\n' '                   repository'
 >	@printf '%s\n' '  ${COMMON_CONFIGS_FILE}          - the configuration file to be used by the'
 >	@printf '%s\n' '                   package files that come from a shell template'
 >	@printf '%s\n' '  ${PKG_FILES}      - create package files that come from a shell template (.shtpl)'
@@ -112,6 +119,12 @@ ${HELP}:
 >	@printf '%s\n' '  ${CLEAN}          - remove files generated from the '\''pkg-files'\'' target'
 >	@printf '%s\n' 'Common make configurations (e.g. make [config]=1 [targets]):'
 >	@printf '%s\n' '  STOW_PKGS      - chooses the Stow packages to install'
+
+.PHONY: ${SETUP}
+${SETUP}:
+>	${PYTHON} -m ${PIP} install --upgrade "${PIP}"
+>	${PYTHON} -m ${PIP} install --requirement "./requirements-dev.txt"
+>	${PRE_COMMIT} install
 
 ${COMMON_CONFIGS_FILE}:
 >	eval "$${_COMMON_CONFIGS_FILE}" > "./${COMMON_CONFIGS_FILE}"
