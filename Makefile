@@ -108,9 +108,9 @@ _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${ex
 ${HELP}:
 	# inspired by the makefiles of the Linux kernel and Mercurial
 >	@printf '%s\n' 'Common make targets:'
->	@printf '%s\n' '  ${SETUP}          - installs the distro-independent dependencies for this'
+>	@printf '%s\n' '  ${SETUP}          - install the distro-independent dependencies for this'
 >	@printf '%s\n' '                   repository'
->	@printf '%s\n' '  ${COMMON_CONFIGS_FILE}          - the configuration file to be used by the'
+>	@printf '%s\n' '  ${COMMON_CONFIGS_FILE}          - create the configuration file to be used by the'
 >	@printf '%s\n' '                   package files that come from a shell template'
 >	@printf '%s\n' '  ${PKG_FILES}      - create package files that come from a shell template (.shtpl)'
 >	@printf '%s\n' '  ${LOCAL_DOTFILES} - create local dotfiles not tracked by version control'
