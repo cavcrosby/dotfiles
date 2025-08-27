@@ -116,7 +116,7 @@ ${HELP}:
 >	@printf '%s\n' '  ${LOCAL_DOTFILES} - create local dotfiles not tracked by version control'
 >	@printf '%s\n' '  ${INSTALL}        - link all the package files to their appropriate places'
 >	@printf '%s\n' '  ${UNINSTALL}      - remove links that were inserted by the install target'
->	@printf '%s\n' '  ${CLEAN}          - remove files generated from the '\''pkg-files'\'' target'
+>	@printf '%s\n' '  ${CLEAN}          - remove files generated from targets'
 >	@printf '%s\n' 'Common make configurations (e.g. make [config]=1 [targets]):'
 >	@printf '%s\n' '  STOW_PKGS      - chooses the Stow packages to install'
 
