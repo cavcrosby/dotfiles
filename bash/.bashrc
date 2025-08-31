@@ -108,7 +108,7 @@ ssh_keygen() {
     ssh-keygen \
         -t "ed25519" \
         -C "${LOGNAME}@${HOSTNAME} $(date)" \
-        -f "${HOME}/.ssh/id_ed25519" \
+        -f "${HOME}/.ssh/id_ed25519_${HOSTNAME}.$(date '+%Y-%m-%dT%H:%M:%S')" \
         -N ""
 }
 
