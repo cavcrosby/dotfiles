@@ -33,6 +33,7 @@ RCLONE_PKG = rclone
 DOCKER_PKG = docker
 AWS_PKG = aws
 LOCAL = local
+PYENV = pyenv
 
 STOW_PKGS = \
 	${BASH_PKG}\
@@ -44,7 +45,8 @@ STOW_PKGS = \
 	${RCLONE_PKG}\
 	${DOCKER_PKG}\
 	${AWS_PKG}\
-	${LOCAL}
+	${LOCAL}\
+	${PYENV}
 
 define _COMMON_CONFIGS_FILE =
 cat << '_EOF_'
