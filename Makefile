@@ -159,8 +159,6 @@ ${INSTALL}: ${pkg_file_paths}
 >		${STOW} --no-folding --ignore=".*.shtpl" --target="${DESTDIR}$${HOME}" "$${pkg}"; \
 >	done
 
-# MONITOR(cavcrosby): while the below works, it appears to generate 'BUG' warnings, this appears to be an issue with stow. Will probably want to monitor the following ticket:
-# https://github.com/aspiers/stow/issues/65
 .PHONY: ${UNINSTALL}
 ${UNINSTALL}:
 >	@for pkg in ${STOW_PKGS}; do \
