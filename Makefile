@@ -100,10 +100,8 @@ raw_pkg_file_paths := $(shell find \
 	-and \( ! -name .stow-local-ignore \) \
 	-and \( -printf '%P ' \) \
 )
-pkg_file_paths := $(shell printf '%s\n' "$(patsubst %.shtpl,%,${raw_pkg_file_paths})" | tr ' ' '\n' | sort --unique)
 
-# inspired from:
-# https://stackoverflow.com/questions/5618615/check-if-a-program-exists-from-a-makefile#answer-25668869
+pkg_file_paths := $(shell printf '%s\n' "$(patsubst %.shtpl,%,${raw_pkg_file_paths})" | tr ' ' '\n' | sort --unique)
 _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${exec}),pass,$(error "No ${exec} in PATH")))
 
 .PHONY: ${HELP}
