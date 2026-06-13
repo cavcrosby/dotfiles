@@ -4,6 +4,15 @@
 
 # recursively expanded variables
 SHELL = /usr/bin/sh
+raw_pkg_file_paths = $(shell ${FIND} \
+	. \
+	-mindepth 2 \
+	\( -type f \) \
+	-and \( ! -path './.git*' \) \
+	-and \( ! -name .stow-local-ignore \) \
+	-and \( -printf '%P ' \) \
+)
+pkg_file_paths = $(shell printf '%s\n' "$(patsubst %.shtpl,%,${raw_pkg_file_paths})" | tr ' ' '\n' | sort --unique)
 
 # shell template variables
 COMMON_CONFIGS_FILE = .conf
@@ -87,23 +96,12 @@ STOW = stow
 PYTHON = python
 PIP = pip
 PRE_COMMIT = pre-commit
+FIND = find
 executables = \
 	${STOW}\
 	${PYTHON}
 
 # simply expanded variables
-raw_pkg_file_paths := $(shell find \
-	. \
-	-mindepth 2 \
-	\( -type f \) \
-	-and \( ! -path './.git*' \) \
-	-and \( ! -name .stow-local-ignore \) \
-	-and \( -printf '%P ' \) \
-)
-pkg_file_paths := $(shell printf '%s\n' "$(patsubst %.shtpl,%,${raw_pkg_file_paths})" | tr ' ' '\n' | sort --unique)
-
-# inspired from:
-# https://stackoverflow.com/questions/5618615/check-if-a-program-exists-from-a-makefile#answer-25668869
 _check_executables := $(foreach exec,${executables},$(if $(shell command -v ${exec}),pass,$(error "No ${exec} in PATH")))
 
 .PHONY: ${HELP}
