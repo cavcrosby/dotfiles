@@ -2,7 +2,7 @@
 # shellcheck disable=SC2148 # not an executable
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
-if ! printf '%s\n' "$-" | grep --quiet "i"; then
+if ! printf "%s\n" "$-" | grep --quiet "i"; then
     return
 fi
 
@@ -35,24 +35,24 @@ fi
 
 _printf_ok() {
     if (( ANSI_COLOR_SUPPORT )); then
-        printf '%s %bok%b\n' "$1" "${color_green}" "${exit_attr_mode}"
+        printf "%s %bok%b\n" "$1" "${color_green}" "${exit_attr_mode}"
     else
-        printf '%s ok\n' "$1"
+        printf "%s ok\n" "$1"
     fi
 }
 
 _printf_error() {
     if (( ANSI_COLOR_SUPPORT )); then
-        printf '%s %berror%b %s\n' "$1" "${color_red}" "${exit_attr_mode}" "$2" >&2
+        printf "%s %berror%b %s\n" "$1" "${color_red}" "${exit_attr_mode}" "$2" >&2
     else
-        printf '%s error %s\n' "$1" "$2" >&2
+        printf "%s error %s\n" "$1" "$2" >&2
     fi
 }
 
 chktooling() {
     local log_file_path
     if [ "$(command -v aws)" ]; then
-        log_file_path="$(mktemp --tmpdir "aws-cli.log.$(date '+%Y-%m-%dT%H:%M:%S')-XXX")"
+        log_file_path="$(mktemp --tmpdir "aws-cli.log.$(date "+%Y-%m-%dT%H:%M:%S")-XXX")"
         if aws sts get-caller-identity > "${log_file_path}" 2>&1; then
             _printf_ok "checking aws-cli credentials..."
         else
@@ -61,7 +61,7 @@ chktooling() {
     fi
 
     if [ "$(command -v docker)" ]; then
-        log_file_path="$(mktemp --tmpdir "docker.log.$(date '+%Y-%m-%dT%H:%M:%S')-XXX")"
+        log_file_path="$(mktemp --tmpdir "docker.log.$(date "+%Y-%m-%dT%H:%M:%S")-XXX")"
         if env --chdir "${HOME}/.docker" docker login > "${log_file_path}" 2>&1; then
             _printf_ok "checking docker hub credentials..."
         else
@@ -70,7 +70,7 @@ chktooling() {
     fi
 
     if [ "$(command -v msmtp)" ]; then
-        if printf '%s\n' "hello there cavcrosby" \
+        if printf "%s\n" "hello there cavcrosby" \
             | msmtp \
                 --account "gmail" \
                 "cavcrosby@gmail.com" \
@@ -84,7 +84,7 @@ chktooling() {
     fi
 
     if [ "$(command -v rclone)" ]; then
-        log_file_path="$(mktemp --tmpdir "rclone.log.$(date '+%Y-%m-%dT%H:%M:%S')-XXX")"
+        log_file_path="$(mktemp --tmpdir "rclone.log.$(date "+%Y-%m-%dT%H:%M:%S")-XXX")"
         if rclone ls --max-depth 1 "crosbyco3:/" > "${log_file_path}" 2>&1; then
             _printf_ok "checking drive token blob for crosbyco3..."
         else
@@ -108,7 +108,7 @@ ssh_keygen() {
     ssh-keygen \
         -t "ed25519" \
         -C "${LOGNAME}@${HOSTNAME} $(date)" \
-        -f "${HOME}/.ssh/id_ed25519_${HOSTNAME}.$(date '+%Y-%m-%dT%H:%M:%S')" \
+        -f "${HOME}/.ssh/id_ed25519_${HOSTNAME}.$(date "+%Y-%m-%dT%H:%M:%S")" \
         -N ""
 }
 
@@ -117,7 +117,7 @@ genpin() {
     tr \
         --complement \
         --delete \
-        '[:digit:]' \
+        "[:digit:]" \
         < "/dev/urandom" \
         | head --bytes "${pinlen}" \
         | sed 's/$/\n/'
