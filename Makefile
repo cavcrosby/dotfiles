@@ -34,6 +34,7 @@ DOCKER_PKG = docker
 AWS_PKG = aws
 LOCAL = local
 PYENV = pyenv
+OPENCODE = opencode
 
 STOW_PKGS = \
 	${BASH_PKG}\
@@ -46,7 +47,8 @@ STOW_PKGS = \
 	${DOCKER_PKG}\
 	${AWS_PKG}\
 	${LOCAL}\
-	${PYENV}
+	${PYENV}\
+	${OPENCODE}
 
 define _COMMON_CONFIGS_FILE =
 cat << '_EOF_'
