@@ -1,0 +1,14 @@
+betterleaksMinVersion = "v1.8.1"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "rclone-google-drive-token"
+confidence = "high"
+regex = '''\{"access_token":"\S+","token_type":"Bearer","refresh_token":"\S+","expiry":"\S+"\}'''
+
+[[rules]]
+id = "gmail-app-password"
+confidence = "medium"
+regex = '''[a-z]{16}'''
