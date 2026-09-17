@@ -7,11 +7,7 @@ SHELL = /usr/bin/sh
 
 # shell template variables
 COMMON_CONFIGS_FILE = .conf
-export LOCAL_RC = .rc.local
-export LOCAL_GITCONFIG = .gitconfig.local
 local_config_files_vars = \
-	$${LOCAL_RC}\
-	$${LOCAL_GITCONFIG}\
 	$${RCLONE_DRIVE_TOKEN_}\
 	$${RCLONE_DRIVE_ROOT_FOLDER_ID_}\
 	$${AWS_ACCESS_KEY_ID_}\
@@ -32,7 +28,6 @@ TMUX_PKG = tmux
 RCLONE_PKG = rclone
 DOCKER_PKG = docker
 AWS_PKG = aws
-LOCAL = local
 PYENV = pyenv
 
 STOW_PKGS = \
@@ -45,7 +40,6 @@ STOW_PKGS = \
 	${RCLONE_PKG}\
 	${DOCKER_PKG}\
 	${AWS_PKG}\
-	${LOCAL}\
 	${PYENV}
 
 define _COMMON_CONFIGS_FILE =
@@ -74,7 +68,6 @@ export _COMMON_CONFIGS_FILE
 HELP = help
 SETUP = setup
 PKG_FILES = pkg-files
-LOCAL_DOTFILES = local-dotfiles
 INSTALL = install
 UNINSTALL = uninstall
 RMPLAIN_FILES = rmplain-files
@@ -113,7 +106,6 @@ ${HELP}:
 >	@printf '%s\n' '  ${COMMON_CONFIGS_FILE}          - create the configuration file to be used by the'
 >	@printf '%s\n' '                   package files that come from a shell template'
 >	@printf '%s\n' '  ${PKG_FILES}      - create package files that come from a shell template (.shtpl)'
->	@printf '%s\n' '  ${LOCAL_DOTFILES} - create local dotfiles not tracked by version control'
 >	@printf '%s\n' '  ${INSTALL}        - link all the package files to their appropriate places'
 >	@printf '%s\n' '  ${UNINSTALL}      - remove links that were inserted by the install target'
 >	@printf '%s\n' '  ${CLEAN}          - remove files generated from targets'
@@ -145,11 +137,6 @@ ${PKG_FILES}: ${pkg_file_paths}
 %:: %.shtpl
 >	${ENVSUBST} '${local_config_files_vars}' < "$<" > "$@"
 
-.PHONY: ${LOCAL_DOTFILES}
-${LOCAL_DOTFILES}:
->	touch "${LOCAL}/${LOCAL_RC}"
->	touch "${LOCAL}/${LOCAL_GITCONFIG}"
-
 .PHONY: ${INSTALL}
 ${INSTALL}: ${pkg_file_paths}
 >	@for pkg in ${STOW_PKGS}; do \
@@ -171,9 +158,15 @@ ${CHMOD_FILES}: ${COMMON_CONFIGS_FILE}
 >	chmod 600 "./docker/.docker/config.json"
 >	chmod 600 "./git/.git-credentials"
 >	chmod 644 "./git/.gitconfig"
+ifneq ($(realpath ./git/.gitconfig.local),)
+>	chmod 600 "./git/.gitconfig.local"
+endif
 >	chmod 600 "./msmtp/.netrc"
 >	chmod 600 "./rclone/.rclone.conf"
 >	chmod 644 "./shell/.rc"
+ifneq ($(realpath ./shell/.rc.local),)
+>	chmod 600 "./shell/.rc.local"
+endif
 >	chmod 600 "./ssh/.ssh/authorized_keys"
 >	chmod 644 "./ssh/.ssh/config"
 
