@@ -29,6 +29,7 @@ RCLONE_PKG = rclone
 DOCKER_PKG = docker
 AWS_PKG = aws
 PYENV = pyenv
+OPENCODE = opencode
 
 STOW_PKGS = \
 	${BASH_PKG}\
@@ -162,6 +163,10 @@ ifneq ($(realpath ./git/.gitconfig.local),)
 >	chmod 600 "./git/.gitconfig.local"
 endif
 >	chmod 600 "./msmtp/.netrc"
+>	chmod 600 "./opencode/.config/opencode/opencode.json"
+ifneq ($(realpath ./opencode/.config/opencode/opencode.json.local),)
+>	chmod 600 "./opencode/.config/opencode/opencode.json.local"
+endif
 >	chmod 600 "./rclone/.rclone.conf"
 >	chmod 644 "./shell/.rc"
 ifneq ($(realpath ./shell/.rc.local),)
