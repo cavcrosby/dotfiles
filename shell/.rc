@@ -8,6 +8,7 @@ NVM_DIR="${HOME}/.nvm"
 DEBEMAIL="cavcrosby@gmail.com"
 DEBFULLNAME="Conner Crosby"
 EDITOR="codium --wait"
+OPENCODE_CONFIG="${HOME}/.config/opencode/opencode.json.local"
 PATH="/usr/local/games:/usr/local/bin:/usr/local/sbin:/usr/games:/usr/bin:/usr/sbin:/bin:/sbin"
 
 if [ -d "/usr/local/go/bin" ]; then
@@ -26,5 +27,5 @@ fi
 # shellcheck source=/dev/null
 [ -r "${HOME}/.rc.local" ] && . "${HOME}/.rc.local"
 
-export GIT_REPOS_PATH PYENV_ROOT NVM_DIR DEBEMAIL DEBFULLNAME EDITOR GOPATH \
-    PATH
+export GIT_REPOS_PATH PYENV_ROOT NVM_DIR DEBEMAIL DEBFULLNAME EDITOR \
+    OPENCODE_CONFIG GOPATH PATH

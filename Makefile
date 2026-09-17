@@ -29,6 +29,7 @@ RCLONE_PKG = rclone
 DOCKER_PKG = docker
 AWS_PKG = aws
 PYENV = pyenv
+OPENCODE = opencode
 
 STOW_PKGS = \
 	${BASH_PKG}\
