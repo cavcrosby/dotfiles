@@ -22,9 +22,9 @@ if [ -d "${GOPATH}/bin" ]; then
     PATH="${GOPATH}/bin:${PATH}"
 fi
 
-# LOCAL_RC is a shell tpl var, something shellcheck cannot source (SC1091)
+# File existence is system dependent and not guaranteed for sourcing (SC1091).
 # shellcheck source=/dev/null
-[ -r "${HOME}/${LOCAL_RC}" ] && . "${HOME}/${LOCAL_RC}"
+[ -r "${HOME}/.rc.local" ] && . "${HOME}/.rc.local"
 
 export GIT_REPOS_PATH PYENV_ROOT NVM_DIR DEBEMAIL DEBFULLNAME EDITOR GOPATH \
     PATH
