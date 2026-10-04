@@ -18,31 +18,18 @@ local_config_files_vars = \
 	$${ENCODED_DOCKER_HUB_AUTH_STR}\
 	$${GITHUB_ACCESS_TOKEN}
 
-# stow pkgs
-BASH_PKG = bash
-GIT_PKG = git
-SHELL_PKG = shell
-MSMTP_PKG = msmtp
-SSH_PKG = ssh
-TMUX_PKG = tmux
-RCLONE_PKG = rclone
-DOCKER_PKG = docker
-AWS_PKG = aws
-PYENV = pyenv
-OPENCODE = opencode
-
 STOW_PKGS = \
-	${BASH_PKG}\
-	${GIT_PKG}\
-	${SHELL_PKG}\
-	${MSMTP_PKG}\
-	${SSH_PKG}\
-	${TMUX_PKG}\
-	${RCLONE_PKG}\
-	${DOCKER_PKG}\
-	${AWS_PKG}\
-	${PYENV}\
-	${OPENCODE}
+	bash\
+	git\
+	shell\
+	msmtp\
+	ssh\
+	tmux\
+	rclone\
+	docker\
+	aws\
+	pyenv\
+	opencode
 
 define _COMMON_CONFIGS_FILE =
 cat << '_EOF_'
